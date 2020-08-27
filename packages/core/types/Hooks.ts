@@ -1,3 +1,5 @@
+import App from '../src/App';
+
 export type LoadHook<T = object> = (props: T) => Promise<App<T>>;
 export type BootHook = () => Promise<void>;
 export type MountHook = () => Promise<HTMLDivElement>;
