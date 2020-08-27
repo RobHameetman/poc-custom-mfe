@@ -1,6 +1,6 @@
 {
   "name": "@microfrontend-example/scripts",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Shared build pipeline automation, centralized testing automation, and other commands",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",
@@ -16,7 +16,7 @@
   "module": "./dist/module/index.js",
   "typings": "./dist/main/index.d.ts",
   "bin": {
-    "microfe": "./bin/index.js"
+    "mfe": "./bin/index.js"
   },
   "scripts": {
     "build": "NODE_ENV=production tsc",
