@@ -1,6 +1,6 @@
 {
   "name": "@microfrontend-example/scripts",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Shared build pipeline automation, centralized testing automation, and other commands",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "mfe build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rob Hameetman (http://rham.io)",
@@ -16,7 +17,7 @@
     "webpack-dashboard": "^3.2.0"
   },
   "dependencies": {
-    "@microfrontend-example/scripts": "^1.0.6",
+    "@microfrontend-example/scripts": "^1.0.8",
     "@microfrontend-example/skeleton": "^1.0.0",
     "systemjs": "^6.1.1"
   }
