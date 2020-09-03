@@ -1,7 +1,7 @@
 export enum BuildEnvs {
   development = 'development',
   production = 'production',
-  testing = 'testing',
+  test = 'test',
 }
 
 export type BuildEnv = keyof typeof BuildEnvs;
@@ -18,8 +18,8 @@ export const isProduction = (
   return typeof value === 'string' && value === BuildEnvs.production;
 };
 
-export const isTesting = (value: unknown = process.env.NODE_ENV): value is BuildEnvs.testing => {
-  return typeof value === 'string' && value === BuildEnvs.testing;
+export const isTest = (value: unknown = process.env.NODE_ENV): value is BuildEnvs.test => {
+  return typeof value === 'string' && value === BuildEnvs.test;
 };
 
 export const getBuildEnv = (): BuildEnv => {
@@ -28,8 +28,8 @@ export const getBuildEnv = (): BuildEnv => {
       return BuildEnvs.development;
     case BuildEnvs.production:
       return BuildEnvs.production;
-    case BuildEnvs.testing:
-      return BuildEnvs.testing;
+    case BuildEnvs.test:
+      return BuildEnvs.test;
     default:
       return BuildEnvs.production;
   }

@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import webpack, { Configuration } from 'webpack';
 import { BuildEnv } from '../../enums';
 
@@ -29,7 +30,21 @@ export class WebpackCompiler implements Compiler<webpack.Compiler> {
       }
 
       this._compiler.run((err, stats) => {
-        return null;
+        if (err) {
+          return reject(err);
+        }
+
+        const { errors } = stats.compilation;
+
+        if (errors.length) {
+          errors.forEach((err) => {
+            console.log(`${err.message}\n`);
+          });
+        }
+
+        console.log(chalk`🚀 {green Build completed successfully}\n`);
+
+        return resolve();
       });
     });
   }

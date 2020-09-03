@@ -1,0 +1,28 @@
+interface Resource {
+  id: ID!
+}
+
+type Comment implements Resource {
+  id: ID!
+  name: String
+  email: String
+  body: String
+  post: Post!
+}
+
+type User implements Resource {
+  id: ID!
+}
+
+type Post implements Resource {
+  id: ID!
+  title: String
+  body: String
+  comments: [Comment]!
+  user: User!
+}
+
+type Query {
+  getPosts: [Post]!
+  getPostsByUserIds(ids: String!): [Post]!
+}

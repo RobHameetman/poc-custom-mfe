@@ -1,26 +1,29 @@
-import { build } from './build';
-import { debug } from './debug';
-import { dev } from './dev';
-import { start } from './start';
-import { test } from './test';
+import { build, serve, test } from './cmd';
+import { BuildEnvs, NODE_ENV } from './utils';
 
-(async (): Promise<void> => {
-  try {
+/**
+ * Makes the script crash on unhandled rejections instead of silently
+ * ignoring them. In the future, promise rejections that are not handled
+ * will terminate the Node.js process with a non-zero exit code.
+ */
+process.on('unhandledRejection', (err) => {
+  throw err;
+});
+
+try {
+  (async (): Promise<void> => {
     const script = process.argv[2];
 
     if (script) {
       switch (script) {
         case 'build':
-          await build();
-          break;
-        case 'debug':
-          await debug();
+          await build(NODE_ENV);
           break;
         case 'dev':
-          await dev();
+          await serve(BuildEnvs.development);
           break;
         case 'start':
-          await start();
+          await serve(BuildEnvs.production);
           break;
         case 'test':
           await test();
@@ -29,9 +32,7 @@ import { test } from './test';
           break;
       }
     }
-
-    console.log('Testing...');
-  } catch (err) {
-    console.error(err instanceof Error ? err : new Error(err));
-  }
-})();
+  })();
+} catch (err) {
+  console.error(err instanceof Error ? err : new Error(err));
+}

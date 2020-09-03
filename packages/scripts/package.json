@@ -1,7 +1,7 @@
 {
   "name": "@microfrontend-example/scripts",
-  "version": "1.0.9",
-  "description": "Shared build pipeline automation, centralized testing automation, and other commands",
+  "version": "1.1.3",
+  "description": "A powerful shared build pipeline for centralized automation and other cool shib",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",
   "license": "MIT",
@@ -16,7 +16,7 @@
   "module": "./dist/module/index.js",
   "typings": "./dist/main/index.d.ts",
   "bin": {
-    "mfe": "./bin/index.js"
+    "@microfrontend-example": "./bin/@microfrontend-example"
   },
   "scripts": {
     "build": "NODE_ENV=production tsc",
@@ -27,15 +27,17 @@
   },
   "dependencies": {
     "@rob.hameetman/eslint-config": "^0.0.11",
-    "@typescript-eslint/eslint-plugin": "^3.2.0",
-    "@typescript-eslint/parser": "^3.2.0",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
     "chalk": "^4.1.0",
     "css-loader": "^3.5.3",
+    "cypress": "^5.0.0",
     "eslint": "^7.2.0",
     "eslint-loader": "^4.0.2",
     "fork-ts-checker-webpack-plugin": "^4.1.6",
-    "html-webpack-plugin": "^4.3.0",
+    "html-webpack-plugin": "^4.4.1",
+    "jest": "^26.4.2",
     "mini-css-extract-plugin": "^0.9.0",
     "open": "^7.0.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -57,6 +59,7 @@
     "webpack-manifest-plugin": "^2.2.0"
   },
   "devDependencies": {
+    "@jest/types": "^26.3.0",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",
     "@types/express": "^4.17.6",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
@@ -100,7 +103,8 @@
         }
       ],
       "import/no-cycle": "off",
-      "import/no-extraneous-dependencies": "off"
+      "import/no-extraneous-dependencies": "off",
+      "jest/no-jest-import": "off"
     }
   },
   "prettier": {
@@ -120,11 +124,6 @@
     ],
     "transform": {
       "^.+\\.ts$": "ts-jest"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-publish": "npm run build"
     }
   }
 }

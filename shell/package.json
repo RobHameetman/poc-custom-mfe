@@ -1,23 +1,71 @@
 {
   "name": "@microfrontend-example/shell",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "mfe build",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Rob Hameetman (http://rham.io)",
+  "version": "0.0.1",
+  "description": "The client-side entrypoint of the application",
+  "author": "Robert H. Hameetman <engineering@robhameetman.com>",
+  "homepage": "https://www.robhameetman.com/",
   "license": "MIT",
+  "private": true,
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "@microfrontend-example build",
+    "start": "@microfrontend-example start",
+    "test": "NODE_ENV=testing jest -co --watch --notify"
+  },
+  "engines": {
+    "node": "8.10.0",
+    "npm": "6.4.1"
+  },
+  "dependencies": {
+    "@microfrontend-example/core": "^0.1.0",
+    "@microfrontend-example/scripts": "^1.1.3",
+    "systemjs": "^6.5.0"
+  },
   "devDependencies": {
+    "@rob.hameetman/eslint-config": "0.0.11",
     "@types/node": "^12.7.5",
     "@types/systemjs": "^0.20.6",
     "ts-node": "^8.4.1",
     "typescript": "^3.6.3",
     "webpack-dashboard": "^3.2.0"
   },
-  "dependencies": {
-    "@microfrontend-example/scripts": "^1.0.9",
-    "systemjs": "^6.1.1"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "@rob.hameetman/eslint-config"
+    ]
+  },
+  "eslintIgnore": [
+    "dist"
+  ],
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 2
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/?*.spec.ts"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
   }
 }

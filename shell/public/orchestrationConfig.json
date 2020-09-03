@@ -1,0 +1,15 @@
+{
+  "services": [
+    {
+      "name": "service1",
+      "manifest": "http://localhost:3000/static/manifest.json",
+      "routes": []
+    },
+    {
+      "name": "service2",
+      "manifest": "http://localhost:3001/static/manifest.json",
+      "routes": []
+    }
+  ],
+  "defaultRoute": "/"
+}

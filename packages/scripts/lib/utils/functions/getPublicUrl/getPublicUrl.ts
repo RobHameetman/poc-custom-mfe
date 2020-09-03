@@ -6,24 +6,24 @@ const mode = getBuildEnv();
 let publicUrl = process.env.PUBLIC_URL;
 
 export const getPublicUrl = async (): Promise<string> => {
-	if (!publicUrl) {
-		const packageJson = await importPackageJson();
+  if (!publicUrl) {
+    const packageJson = await importPackageJson();
 
-		if (packageJson) {
-			publicUrl = packageJson.homepage;
-		}
-	}
+    if (packageJson) {
+      publicUrl = packageJson.homepage;
+    }
+  }
 
-	if (publicUrl) {
-		const normalizedUrl = publicUrl.endsWith('/') ? publicUrl : `${publicUrl}/`;
-		const validUrl = new URL(normalizedUrl, stubUrl);
+  if (publicUrl) {
+    const normalizedUrl = publicUrl.endsWith('/') ? publicUrl : `${publicUrl}/`;
+    const validUrl = new URL(normalizedUrl, stubUrl);
 
-		return normalizedUrl.startsWith('.')
-			? isDevelopment(mode)
-				? '/'
-				: normalizedUrl
-			: validUrl.pathname;
-	}
+    return normalizedUrl.startsWith('.')
+      ? isDevelopment(mode)
+        ? '/'
+        : normalizedUrl
+      : validUrl.pathname;
+  }
 
-	return '/';
+  return '/';
 };

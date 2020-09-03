@@ -40,12 +40,16 @@ export class BuildPipeline {
   }
 
   async build(mode?: BuildEnv): Promise<void> {
-    if (mode) {
-      this.mode = mode;
-    }
+    try {
+      if (mode) {
+        this.mode = mode;
+      }
 
-    if (this._compiler) {
-      this._compiler.build(this.mode);
+      if (this._compiler) {
+        this._compiler.build(this.mode);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 

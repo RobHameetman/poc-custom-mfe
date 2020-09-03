@@ -1,0 +1,73 @@
+version: '3'
+
+services:
+  admin:
+    build:
+      context: ./apps/admin
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-app-admin
+    command: npm start
+    tty: true
+    ports:
+      - 3001:3001
+
+  auth:
+    build:
+      context: ./services/auth
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-service-auth
+    command: npm start
+    tty: true
+    ports:
+      - 3002:3002
+      - 35729:35729
+    volumes:
+      - $PWD/view/node_modules:/home/view/node_modules
+      - $PWD/view:/home/view
+
+  billing:
+    build:
+      context: ./apps/billing
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-app-billing
+    command: npm start
+    tty: true
+    ports:
+      - 3003:3003
+
+  data:
+    build:
+      context: ./services/data
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-service-data
+    command: npm start
+    restart: always
+    tty: true
+    ports:
+      - 3004:3004
+
+  i18n:
+    build:
+      context: ./services/i18n
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-service-i18n
+    command: npm start
+    tty: true
+    ports:
+      - 3005:3005
+
+  shell:
+    build:
+      context: ./shell
+      args:
+        NODE_ENV: 'production'
+    container_name: mfe-shell
+    command: npm start
+    tty: true
+    ports:
+      - 3000:3000

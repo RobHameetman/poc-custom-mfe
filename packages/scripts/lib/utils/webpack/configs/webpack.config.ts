@@ -2,22 +2,21 @@ import path from 'path';
 import { Configuration, DevtoolModuleFilenameTemplateInfo } from 'webpack';
 import {
   PATHS_APP_BUILD_DIR,
+  PATHS_APP_ENTRYPOINT,
   PATHS_APP_NODE_MODULES,
   PATHS_APP_SRC_DIR,
   WebpackBuildMode,
   getBuildEnv,
+  env as getEnv,
   isDevelopment,
   isProduction,
   isWebpackBuildMode,
 } from '../../enums';
 import { EXTENSIONS } from '../extensions';
 import { cssRule, eslintRule, staticImageFormatRule, tsRule } from '../rules';
-import { PATHS_APP_ENTRYPOINT } from '../../enums/Paths';
 import { PackageJson } from '../../types';
-import { definePlugin } from '../plugins/definePlugin/definePlugin';
-import { env as getEnv } from '../../enums/Env';
-
 import {
+  definePlugin,
   forkTsCheckerWebpackPlugin,
   htmlWebpackPlugin,
   manifestPlugin,
