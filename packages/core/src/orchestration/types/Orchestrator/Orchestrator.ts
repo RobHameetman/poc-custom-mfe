@@ -1,20 +1,24 @@
 import { HandleCallHooksServiceAgent } from '../HandleCallHooksServiceAgent';
-import { OrchestrationEvent } from '../OrchestrationEvent';
 import { OrchestrationEventHandlers } from '../OrchestrationEventHandlers';
 import { OrchestrationEvents } from '../../enums';
 import {
   CallHooksEvent,
+  CallHooksErrorEvent,
+  CallHooksResolvedEvent,
+  ProcessOrchestrationQueueEvent,
+  RerouteUrlOnlyEvent,
+  SetOrchestratorListeningEvent,
   handleCallHooks,
   handleCallHooksError,
-  handleCallHooksSuccess,
+  handleCallHooksResolved,
   handleProcessOrchestrationQueue,
   handleRerouteUrlOnly,
   handleSetOrchestratorListening,
-  handleStart,
-  handleStop,
+  // handleStart,
+  // handleStop,
   isCallHooksEvent,
   isCallHooksErrorEvent,
-  isCallHooksSuccessEvent,
+  isCallHooksResolvedEvent,
   isRerouteUrlOnlyEvent,
   isProcessOrchestrationQueueEvent,
   isSetOrchestratorListeningEvent,
@@ -55,16 +59,16 @@ export class Orchestrator {
     [OrchestrationEvents.CALL_HOOKS]: (e) => this._handleCallHooks(e),
     [OrchestrationEvents.CALL_HOOKS_ERROR]: (e) =>
       this._handleCallHooksError(e),
-    [OrchestrationEvents.CALL_HOOKS_SUCCESS]: (e) =>
-      this._handleCallHooksSuccess(e),
+    [OrchestrationEvents.CALL_HOOKS_RESOLVED]: (e) =>
+      this._handleCallHooksResolved(e),
     [OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE]: (e) =>
       this._handleProcessOrchestrationQueue(e),
     [OrchestrationEvents.REROUTE_URL_ONLY]: (e) =>
       this._handleRerouteUrlOnly(e),
     [OrchestrationEvents.SET_ORCHESTRATOR_LISTENING]: (e) =>
       this._handleSetOrchestratorListening(e),
-    [OrchestrationEvents.START]: (e) => this._handleStart(e),
-    [OrchestrationEvents.STOP]: (e) => this._handleStop(e),
+    // [OrchestrationEvents.START]: (e) => this._handleStart(e),
+    // [OrchestrationEvents.STOP]: (e) => this._handleStop(e),
   };
 
   public isRunning = (): boolean => {
@@ -100,7 +104,7 @@ export class Orchestrator {
   }
 
   private _getServicesToUnload(): Array<Service> {
-    return getServicesToUnload(this._validateRoute);
+    return getServicesToUnload();
   }
 
   private _getServicesToUnmount(): Array<Service> {
@@ -116,7 +120,7 @@ export class Orchestrator {
     };
   }
 
-  private _handleCallHooks(e: OrchestrationEvent): void {
+  private _handleCallHooks(e: CallHooksEvent): void {
     if (isCallHooksEvent(e)) {
       return handleCallHooks(
         e,
@@ -129,7 +133,7 @@ export class Orchestrator {
     }
   }
 
-  private _handleCallHooksError(e: OrchestrationEvent): void {
+  private _handleCallHooksError(e: CallHooksErrorEvent): void {
     if (isCallHooksErrorEvent(e)) {
       return handleCallHooksError(
         e,
@@ -140,9 +144,9 @@ export class Orchestrator {
     }
   }
 
-  private _handleCallHooksSuccess(e: OrchestrationEvent): void {
-    if (isCallHooksSuccessEvent(e)) {
-      return handleCallHooksSuccess(
+  private _handleCallHooksResolved(e: CallHooksResolvedEvent): void {
+    if (isCallHooksResolvedEvent(e)) {
+      return handleCallHooksResolved(
         e,
         this._dispatch,
         this._hasPendingCalls,
@@ -151,13 +155,9 @@ export class Orchestrator {
     }
   }
 
-  private _handleRerouteUrlOnly(e: OrchestrationEvent): void {
-    if (isRerouteUrlOnlyEvent(e)) {
-      handleRerouteUrlOnly(e);
-    }
-  }
-
-  private _handleProcessOrchestrationQueue(e: OrchestrationEvent): void {
+  private _handleProcessOrchestrationQueue(
+    e: ProcessOrchestrationQueueEvent,
+  ): void {
     if (isProcessOrchestrationQueueEvent(e)) {
       handleProcessOrchestrationQueue(
         e,
@@ -168,19 +168,27 @@ export class Orchestrator {
     }
   }
 
-  private _handleSetOrchestratorListening(e: OrchestrationEvent): void {
+  private _handleRerouteUrlOnly(e: RerouteUrlOnlyEvent): void {
+    if (isRerouteUrlOnlyEvent(e)) {
+      handleRerouteUrlOnly(e);
+    }
+  }
+
+  private _handleSetOrchestratorListening(
+    e: SetOrchestratorListeningEvent,
+  ): void {
     if (isSetOrchestratorListeningEvent(e)) {
       handleSetOrchestratorListening(e, this._setIsListening);
     }
   }
 
-  private _handleStart(e: OrchestrationEvent): void {
-    handleStart(e, this._start);
-  }
+  // private _handleStart(e: StartEvent): void {
+  //   handleStart(e, this._start);
+  // }
 
-  private _handleStop(e: OrchestrationEvent): void {
-    handleStop(e, this._stop);
-  }
+  // private _handleStop(e: StopEvent): void {
+  //   handleStop(e, this._stop);
+  // }
 
   private _hasPendingCalls = (): boolean => {
     return this._orchestrationQueue.length > 0;
@@ -194,13 +202,13 @@ export class Orchestrator {
     this._listening = true;
   };
 
-  private _start = (): void => {
-    this._running = true;
-  };
+  // private _start = (): void => {
+  //   this._running = true;
+  // };
 
-  private _stop = (): void => {
-    this._running = false;
-  };
+  // private _stop = (): void => {
+  //   this._running = false;
+  // };
 
   private _shiftOrchestrationQueue = (): CallHooksEvent | undefined => {
     return this._orchestrationQueue.shift();

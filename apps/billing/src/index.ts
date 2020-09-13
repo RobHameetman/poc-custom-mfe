@@ -1,13 +1,5 @@
-let $mountNode: HTMLElement | null = null;
+import { Billing } from './Billing';
 
-export const boot = () => {};
-
-export const mount = (): HTMLElement => {
-  $mountNode = document.getElementById('billing');
-
-  return $mountNode as HTMLElement;
-};
-
-export const unmount = (): void => {
-  $mountNode = null;
+export const render = (): HTMLElement => {
+  return Billing;
 };

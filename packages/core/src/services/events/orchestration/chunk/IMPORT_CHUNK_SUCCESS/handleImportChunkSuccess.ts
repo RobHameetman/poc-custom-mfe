@@ -1,5 +1,8 @@
 import { ImportChunkSuccessEvent } from '../../../../events';
+import { logEvent } from '../../../../../utils';
 
-export const handleImportChunkSuccess = (_: ImportChunkSuccessEvent): void => {
+export const handleImportChunkSuccess = (e: ImportChunkSuccessEvent): void => {
+  logEvent(e);
+
   // TODO
 };

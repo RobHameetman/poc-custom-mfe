@@ -1,9 +1,13 @@
 import { isRegisterServiceInput } from '../RegisterServiceInput';
-import { RegistrationEvent } from '../RegistrationEvent';
 import { RegistrationEventHandlers } from '../RegistrationEventHandlers';
 import { RegistrationEvents } from '../../enums';
 import {
+  AddServiceEvent,
   RegisterEvent,
+  RegistrationErrorEvent,
+  RegistrationSuccessEvent,
+  RemoveServiceEvent,
+  SetRegistryListeningEvent,
   handleAddService,
   handleRegistrationError,
   handleRegistrationSuccess,
@@ -16,11 +20,12 @@ import {
   isSetRegistryListeningEvent,
 } from '../../events';
 import { getRegistryDispatch } from '../../functions';
+import { Namespaces } from '../../../orchestration';
 import { Service } from '../../../services';
 import { addEventListeners, dispatchFrom } from '../../../utils';
 
 export class Registry {
-  public static readonly namespace = 'Registry';
+  public static readonly namespace = Namespaces.Registry;
   private static _instance: Registry;
 
   public static get instance(): Registry {
@@ -51,9 +56,7 @@ export class Registry {
       this._handleSetRegistryListening(e),
   };
 
-  private constructor() {
-    this._addEventListeners();
-  }
+  private constructor() {}
 
   public static asyncMap<U>(
     callback: (
@@ -130,13 +133,15 @@ export class Registry {
     }
   }
 
-  private _addEventListeners(): void {
-    addEventListeners(
-      this._listening,
-      this._handlers,
-      Registry.namespace,
-      RegistrationEvents.SET_REGISTRY_LISTENING,
-    );
+  public addEventListeners() {
+    if (!this._listening) {
+      addEventListeners(
+        this._listening,
+        this._handlers,
+        Registry.namespace,
+        RegistrationEvents.SET_REGISTRY_LISTENING,
+      );
+    }
   }
 
   private _addService = <T = Record<string, unknown>>(
@@ -152,46 +157,38 @@ export class Registry {
   };
 
   private _handleAddService<T = Record<string, unknown>>(
-    e: RegistrationEvent<T>,
+    e: AddServiceEvent<T>,
   ): void {
     if (isAddServiceEvent<T>(e)) {
       handleAddService<T>(e, this._addService, this._dispatch);
     }
   }
 
-  private _handleRegistrationError<T = Record<string, unknown>>(
-    e: RegistrationEvent<T>,
-  ): void {
+  private _handleRegistrationError(e: RegistrationErrorEvent): void {
     if (isRegistrationErrorEvent(e)) {
       handleRegistrationError(e);
     }
   }
 
-  private _handleRegistrationSuccess<T = Record<string, unknown>>(
-    e: RegistrationEvent<T>,
-  ): void {
+  private _handleRegistrationSuccess(e: RegistrationSuccessEvent): void {
     if (isRegistrationSuccessEvent(e)) {
       handleRegistrationSuccess(e);
     }
   }
 
-  private _handleRemoveService<T = Record<string, unknown>>(
-    e: RegistrationEvent<T>,
-  ): void {
+  private _handleRemoveService(e: RemoveServiceEvent): void {
     if (isRemoveServiceEvent(e)) {
       handleRemoveService(e);
     }
   }
 
-  private _handleSetRegistryListening<T = Record<string, unknown>>(
-    e: RegistrationEvent<T>,
-  ): void {
+  private _handleSetRegistryListening(e: SetRegistryListeningEvent): void {
     if (isSetRegistryListeningEvent(e)) {
       handleSetRegistryListening(e, this._setIsListening);
     }
   }
 
-  private _setIsListening = (): void => {
-    this._listening = true;
+  private _setIsListening = (value: boolean): void => {
+    this._listening = value;
   };
 }

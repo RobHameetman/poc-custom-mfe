@@ -1,5 +1,8 @@
 import { ChangeStatusEvent } from '../../../../events';
+import { logEvent } from '../../../../../utils';
 
-export const handleChangeStatus = (_: ChangeStatusEvent): void => {
+export const handleChangeStatus = (e: ChangeStatusEvent): void => {
+  logEvent(e);
+
   // TODO
 };

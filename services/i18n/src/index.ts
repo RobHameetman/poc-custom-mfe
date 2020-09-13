@@ -1,13 +1,5 @@
-let $mountNode: HTMLElement | null = null;
+import { i18n } from './i18n';
 
-export const boot = () => {};
-
-export const mount = (): HTMLElement => {
-  $mountNode = document.getElementById('i18n');
-
-  return $mountNode as HTMLElement;
-};
-
-export const unmount = (): void => {
-  $mountNode = null;
+export const render = (): HTMLElement => {
+  return i18n;
 };

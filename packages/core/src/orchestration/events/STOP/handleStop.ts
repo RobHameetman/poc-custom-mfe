@@ -1,5 +1,8 @@
-import { StopEvent } from '../../events';
+// import { StopEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
-export const handleStop = (_: StopEvent, stop: () => void) => {
+export const handleStop = (e: Record<'type', string>, stop: () => void) => {
+  logEvent(e);
+
   stop();
 };

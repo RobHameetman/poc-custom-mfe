@@ -1,15 +1,11 @@
 import { dispatchFrom } from './../../../utils';
-import { Component, Prop } from '../../../rendering';
 
 export interface ServiceProps {
   readonly name: string;
 }
 
-@Component({
-  tag: 'service',
-})
 export class Service extends HTMLElement {
-  @Prop() public name = '';
+  public name = '';
 
   constructor() {
     super();
@@ -22,7 +18,11 @@ export class Service extends HTMLElement {
     // );
   }
 
-  public attributeChangedCallback(attr, currentValue, newValue) {
+  public attributeChangedCallback(
+    attr: string,
+    currentValue: string,
+    newValue: string,
+  ) {
     switch (attr) {
     }
   }

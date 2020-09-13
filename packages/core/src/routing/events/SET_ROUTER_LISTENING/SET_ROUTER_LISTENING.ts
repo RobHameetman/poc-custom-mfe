@@ -1,16 +1,21 @@
 import { RoutingEvents } from '../../enums';
-import { Router } from '../../types';
+import { Namespaces } from '../../../orchestration';
 import { dispatch } from '../../../utils';
 
-export const SET_ROUTER_LISTENING = `${Router.namespace}:${RoutingEvents.SET_ROUTER_LISTENING}`;
+export const SET_ROUTER_LISTENING = `${Namespaces.Router}:${RoutingEvents.SET_ROUTER_LISTENING}`;
 export type SET_ROUTER_LISTENING = typeof SET_ROUTER_LISTENING;
 
-export interface SetRouterListeningEvent extends CustomEvent<boolean> {
-  type: SET_ROUTER_LISTENING;
+export interface SetRouterListeningEvent
+  extends CustomEvent<SetRouterListeningEventDetail> {
+  readonly type: SET_ROUTER_LISTENING;
+}
+
+export interface SetRouterListeningEventDetail {
+  readonly value: boolean;
 }
 
 export const setRouterListening = (value: boolean) => {
-  dispatch(SET_ROUTER_LISTENING, value);
+  dispatch(SET_ROUTER_LISTENING, { value });
 };
 
 export const isSetRouterListeningEvent = (

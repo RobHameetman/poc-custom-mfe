@@ -1,10 +1,11 @@
 export enum WebpackConfigFileExtensions {
-  'js',
-  'web.ts' = 'web.ts',
-  'ts' = 'ts',
-  'web.tsx' = 'web.tsx',
-  'tsx' = 'tsx',
-  'json' = 'json',
+  '.js',
+  '.json',
+  '.jsx',
+  '.ts',
+  '.tsx',
 }
 
-export const EXTENSIONS = Object.keys(WebpackConfigFileExtensions);
+export const EXTENSIONS = Object.keys(WebpackConfigFileExtensions).filter(
+  (key) => typeof key === 'string',
+);

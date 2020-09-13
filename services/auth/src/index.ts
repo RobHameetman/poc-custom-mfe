@@ -1,13 +1,5 @@
-let $mountNode: HTMLElement | null = null;
+import { Auth } from './Auth';
 
-export const boot = () => {};
-
-export const mount = (): HTMLElement => {
-  $mountNode = document.getElementById('auth');
-
-  return $mountNode as HTMLElement;
+export const render = (): HTMLElement => {
+  return Auth;
 };
-
-export const unmount = (): void => {
-  $mountNode = null;
-}

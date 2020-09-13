@@ -14,6 +14,6 @@ export const addEventListeners = <H extends Handler & EventListener>(
 
     const dispatch = dispatchFrom(namespace);
 
-    dispatch(SET_LISTENING, true);
+    dispatch(SET_LISTENING, { value: true });
   }
 };

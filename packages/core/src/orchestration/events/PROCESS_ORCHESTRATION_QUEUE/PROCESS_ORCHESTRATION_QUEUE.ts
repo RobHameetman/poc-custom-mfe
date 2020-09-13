@@ -1,8 +1,7 @@
-import { OrchestrationEvents } from '../../enums';
-import { Orchestrator } from '../../types';
+import { Namespaces, OrchestrationEvents } from '../../enums';
 import { dispatch } from '../../../utils';
 
-export const PROCESS_ORCHESTRATION_QUEUE = `${Orchestrator.namespace}:${OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE}`;
+export const PROCESS_ORCHESTRATION_QUEUE = `${Namespaces.App}:${OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE}`;
 export type PROCESS_ORCHESTRATION_QUEUE = typeof PROCESS_ORCHESTRATION_QUEUE;
 
 export interface ProcessOrchestrationQueueEvent
@@ -17,12 +16,13 @@ export const processOrchestrationQueue = (): void => {
 };
 
 export const isProcessOrchestrationQueueEvent = (
-  value: unknown
+  value: unknown,
 ): value is ProcessOrchestrationQueueEvent => {
   return (
     typeof value === 'object' &&
     value !== null &&
     'type' in value &&
-    (value as Partial<ProcessOrchestrationQueueEvent>).type === PROCESS_ORCHESTRATION_QUEUE
+    (value as Partial<ProcessOrchestrationQueueEvent>).type ===
+      PROCESS_ORCHESTRATION_QUEUE
   );
 };

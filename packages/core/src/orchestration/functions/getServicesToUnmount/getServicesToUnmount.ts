@@ -5,9 +5,8 @@ import { Service, ServiceStatuses } from '../../../services';
 export const getServicesToUnmount = (validateService: ServiceValidationFn): Array<Service> => {
   return Registry.filter(
     (service) =>
-      (service.status === ServiceStatuses.REGISTERED &&
-        validateService(service, ServiceStatuses.LOAD_ERROR)) ||
-      (service.status === ServiceStatuses.LOAD_ERROR &&
-        new Date().getTime() - service.loadErrorTime >= 200)
+      service.status === ServiceStatuses.MOUNT_ERROR ||
+      (service.status === ServiceStatuses.MOUNTED &&
+        !validateService(service, ServiceStatuses.UNMOUNT_ERROR))
   );
 };

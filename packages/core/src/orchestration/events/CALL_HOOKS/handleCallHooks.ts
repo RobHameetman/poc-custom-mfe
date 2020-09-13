@@ -1,6 +1,7 @@
 import { CallHooksEvent } from './CALL_HOOKS';
 import { load, unload, mount, unmount } from '../../hooks';
 import { HandleCallHooksServiceAgent } from '../../types';
+import { logEvent } from '../../../utils';
 
 export const handleCallHooks = (
   e: CallHooksEvent,
@@ -10,6 +11,8 @@ export const handleCallHooks = (
   isRunning: () => boolean,
   setIsOrchestratingToTrue: () => void
 ) => {
+  logEvent(e);
+
   if (isOrchestrating) {
     pushToOrchestrationQueue(e);
 

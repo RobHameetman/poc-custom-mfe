@@ -1,5 +1,8 @@
 import { RemoveServiceEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
-export const handleRemoveService = (_: RemoveServiceEvent): void => {
+export const handleRemoveService = (e: RemoveServiceEvent): void => {
+  logEvent(e);
+
   // TODO
 };

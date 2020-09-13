@@ -1,5 +1,8 @@
-import { StartEvent } from '../../events';
+// import { StartEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
-export const handleStart = (_: StartEvent, start: () => void) => {
+export const handleStart = (e: Record<'type', string>, start: () => void) => {
+  logEvent(e);
+
   start();
 };

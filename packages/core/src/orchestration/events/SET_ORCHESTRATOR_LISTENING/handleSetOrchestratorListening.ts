@@ -1,8 +1,11 @@
 import { SetOrchestratorListeningEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
 export const handleSetOrchestratorListening = (
-  _: SetOrchestratorListeningEvent,
+  e: SetOrchestratorListeningEvent,
   setOrchestratorListening: () => void
 ): void => {
+  logEvent(e);
+
   setOrchestratorListening();
 };

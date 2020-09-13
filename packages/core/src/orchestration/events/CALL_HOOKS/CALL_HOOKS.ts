@@ -1,8 +1,7 @@
-import { OrchestrationEvents } from '../../enums';
-import { Orchestrator } from '../../types';
+import { Namespaces, OrchestrationEvents } from '../../enums';
 import { dispatch } from '../../../utils';
 
-export const CALL_HOOKS = `${Orchestrator.namespace}:${OrchestrationEvents.CALL_HOOKS}`;
+export const CALL_HOOKS = `${Namespaces.App}:${OrchestrationEvents.CALL_HOOKS}`;
 export type CALL_HOOKS = typeof CALL_HOOKS;
 
 export interface CallHooksEvent extends CustomEvent<CallHooksEventDetail> {

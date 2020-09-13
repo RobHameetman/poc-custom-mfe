@@ -1,8 +1,7 @@
-import { OrchestrationEvents } from '../../enums';
-import { Orchestrator } from '../../types';
+import { Namespaces, OrchestrationEvents } from '../../enums';
 import { dispatch } from '../../../utils';
 
-export const START = `${Orchestrator.namespace}:${OrchestrationEvents.START}`;
+export const START = `${Namespaces.App}:${OrchestrationEvents.START}`;
 export type START = typeof START;
 
 export interface StartEvent extends CustomEvent<StartEventDetail> {

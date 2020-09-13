@@ -1,8 +1,11 @@
 import { SetRouterListeningEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
 export const handleSetRouterListening = (
-  _: SetRouterListeningEvent,
-  setRouterListening: () => void
+  e: SetRouterListeningEvent,
+  setRouterListening: (value: boolean) => void,
 ): void => {
-  setRouterListening();
+  logEvent(e);
+
+  setRouterListening(e.detail.value);
 };

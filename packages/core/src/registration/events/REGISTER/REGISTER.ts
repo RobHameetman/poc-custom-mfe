@@ -1,6 +1,6 @@
 import { RegistrationEvents } from '../../enums';
-import { dispatchOnceFrom } from '../../../utils';
 import { RegisterServiceInput, Registry } from '../../types';
+import { dispatchOnceFrom } from '../../../utils';
 
 export type RegisterEvent = CustomEvent<RegisterServiceInput>;
 

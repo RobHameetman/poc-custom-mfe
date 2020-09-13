@@ -1,13 +1,15 @@
 import { CallHooksErrorEvent } from './CALL_HOOKS_ERROR';
 import { OrchestrationEvents } from '../../enums';
-import { DispatchFn } from '../../../utils';
+import { DispatchFn, logEvent } from '../../../utils';
 
 export const handleCallHooksError = (
-  _: CallHooksErrorEvent,
+  e: CallHooksErrorEvent,
   dispatch: DispatchFn,
   shouldProcessOrchestrationQueue: () => boolean,
   end: () => void,
 ): void => {
+  logEvent(e);
+
   end();
 
   if (shouldProcessOrchestrationQueue()) {

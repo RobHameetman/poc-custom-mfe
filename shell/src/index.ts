@@ -1,3 +1,4 @@
-export const noop = (): number => {
-  return Math.random();
-};
+import { start } from '@microfrontend-example/core';
+import { App } from './App';
+
+start(App);

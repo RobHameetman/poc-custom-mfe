@@ -1,5 +1,8 @@
 import { ImportEntrypointSuccessEvent } from '../../../../events';
+import { logEvent } from '../../../../../utils';
 
-export const handleImportEntrypointSuccess = (_: ImportEntrypointSuccessEvent): void => {
+export const handleImportEntrypointSuccess = (e: ImportEntrypointSuccessEvent): void => {
+  logEvent(e);
+
   // TODO
 };

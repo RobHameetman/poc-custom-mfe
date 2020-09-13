@@ -113,10 +113,7 @@ export const createWebpackConfig = (
       forkTsCheckerWebpackPlugin(),
     ].concat([miniCssExtractPlugin()].filter(() => isProd)),
     resolve: {
-      alias: {
-        'react-native': 'react-native-web',
-      },
-      extensions: EXTENSIONS.map((EXT) => `.${EXT}`).filter((EXT) => !EXT.includes('ts')),
+      extensions: EXTENSIONS,
       modules: ['node_modules', PATHS_APP_NODE_MODULES],
       plugins: [],
     },

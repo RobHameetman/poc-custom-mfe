@@ -5,12 +5,17 @@ import { dispatch } from '../../../utils';
 export const SET_REGISTRY_LISTENING = `${Registry.namespace}:${RegistrationEvents.SET_REGISTRY_LISTENING}`;
 export type SET_REGISTRY_LISTENING = typeof SET_REGISTRY_LISTENING;
 
-export interface SetRegistryListeningEvent extends CustomEvent<boolean> {
+export interface SetRegistryListeningEvent
+  extends CustomEvent<SetRegistryListeningEventDetail> {
   type: SET_REGISTRY_LISTENING;
 }
 
+export interface SetRegistryListeningEventDetail {
+  value: boolean;
+}
+
 export const setRegistryListening = (value: boolean) => {
-  dispatch(SET_REGISTRY_LISTENING, value);
+  dispatch(SET_REGISTRY_LISTENING, { value });
 };
 
 export const isSetRegistryListeningEvent = (

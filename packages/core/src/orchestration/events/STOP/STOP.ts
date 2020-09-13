@@ -1,8 +1,7 @@
-import { OrchestrationEvents } from '../../enums';
-import { Orchestrator } from '../../types';
+import { Namespaces, OrchestrationEvents } from '../../enums';
 import { dispatch } from '../../../utils';
 
-export const STOP = `${Orchestrator.namespace}:${OrchestrationEvents.STOP}`;
+export const STOP = `${Namespaces.App}:${OrchestrationEvents.STOP}`;
 export type STOP = typeof STOP;
 
 export interface StopEvent extends CustomEvent<StopEventDetail> {

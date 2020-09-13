@@ -1,3 +1,5 @@
+import { CustomElementConstructor } from '../../types';
+
 export interface ComponentConfig {
   /**
    * If `true`, the component will use native shadow-dom encapsulation, it will fallback to

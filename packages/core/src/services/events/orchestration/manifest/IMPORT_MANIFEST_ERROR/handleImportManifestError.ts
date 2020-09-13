@@ -1,5 +1,8 @@
 import { ImportManifestErrorEvent } from '../../../../events';
+import { logEvent } from '../../../../../utils';
 
-export const handleImportManifestError = (_: ImportManifestErrorEvent): void => {
+export const handleImportManifestError = (e: ImportManifestErrorEvent): void => {
+  logEvent(e);
+
   // TODO
 };

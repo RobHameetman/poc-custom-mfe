@@ -1,8 +1,11 @@
 import { SetRegistryListeningEvent } from '../../events';
+import { logEvent } from '../../../utils';
 
 export const handleSetRegistryListening = (
-  _: SetRegistryListeningEvent,
-  setRegistryListening: () => void
+  e: SetRegistryListeningEvent,
+  setRegistryListening: (value: boolean) => void,
 ): void => {
-  setRegistryListening();
+  logEvent(e);
+
+  setRegistryListening(e.detail.value);
 };

@@ -1,14 +1,16 @@
 import { OrchestrationEvents } from '../../enums';
 import { CallHooksEvent, ProcessOrchestrationQueueEvent, isCallHooksEvent } from '../../events';
 import { CallHooksEventHandler } from '../../types';
-import { DispatchFn } from '../../../utils';
+import { DispatchFn, logEvent } from '../../../utils';
 
 export const handleProcessOrchestrationQueue = (
-  _: ProcessOrchestrationQueueEvent,
+  e: ProcessOrchestrationQueueEvent,
   handleCallHooks: CallHooksEventHandler,
   shiftOrchestrationQueue: () => CallHooksEvent | undefined,
   dispatch: DispatchFn
 ) => {
+  logEvent(e);
+
   const callHooksEvent = shiftOrchestrationQueue();
 
   if (isCallHooksEvent(callHooksEvent)) {

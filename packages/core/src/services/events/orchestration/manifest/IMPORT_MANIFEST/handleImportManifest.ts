@@ -1,5 +1,8 @@
 import { ImportManifestEvent } from '../../../../events';
+import { logEvent } from '../../../../../utils';
 
-export const handleImportManifest = (_: ImportManifestEvent): void => {
+export const handleImportManifest = (e: ImportManifestEvent): void => {
+  logEvent(e);
+
   // TODO
 };

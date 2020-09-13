@@ -29,12 +29,14 @@ const DEFAULT_CONFIG: PropConfig = {
   reflect: true,
 };
 
-export const Prop: PropDecorator = ({
-  attribute = undefined,
-  mutable = false,
-  reflect = true,
-} = DEFAULT_CONFIG) => {
+export const Prop: PropDecorator = (config = DEFAULT_CONFIG) => {
   return <C>(Component: C, prop: string | symbol): C | void => {
-    
+    if (config) {
+      const { attribute = undefined, mutable = false, reflect = true } = config;
+
+      void attribute;
+      void mutable;
+      void reflect;
+    }
   };
 };

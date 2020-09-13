@@ -1,13 +1,8 @@
-import { ServiceValidationFn } from '../../types';
 import { Registry } from '../../../registration';
 import { Service, ServiceStatuses } from '../../../services';
 
-export const getServicesToUnload = (validateService: ServiceValidationFn): Array<Service> => {
+export const getServicesToUnload = (): Array<Service> => {
   return Registry.filter(
-    (service) =>
-      (service.status === ServiceStatuses.REGISTERED &&
-        validateService(service, ServiceStatuses.LOAD_ERROR)) ||
-      (service.status === ServiceStatuses.LOAD_ERROR &&
-        new Date().getTime() - service.loadErrorTime >= 200)
+    (service) => service.status === ServiceStatuses.LOAD_ERROR,
   );
 };

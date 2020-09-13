@@ -1,6 +1,6 @@
 {
   "name": "@microfrontend-example/core",
-  "version": "0.1.0",
+  "version": "0.1.110",
   "description": "An event-driven orchestration layer",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",
@@ -12,17 +12,21 @@
   "bugs": {
     "url": "https://github.com/RobHameetman/packages/issues"
   },
-  "main": "./dist/esm/core.min.js",
-  "module": "./dist/umd/core.min.js",
-  "typings": "./dist/esm/index.d.ts",
+  "main": "./dist/prod/core.esm.js",
+  "module": "./dist/dev/core.umd.js",
+  "typings": "./dist/declarations/index.d.ts",
   "directories": {
     "lib": "src",
     "test": "__test__"
   },
   "scripts": {
-    "build": "concurrently npm:build:esm npm:build:umd",
-    "build:esm": "BUILD_FORMAT=ESM npm run rollup",
-    "build:umd": "BUILD_FORMAT=UMD npm run rollup",
+    "build": "concurrently npm:build:dev npm:build:prod",
+    "build:dev": "NODE_ENV=development npm run rollup",
+    "build:prod": "NODE_ENV=production npm run rollup",
+    "release": "npm run release:patch",
+    "release:major": "npm run build && npm version major && npm publish",
+    "release:minor": "npm run build && npm version minor && npm publish",
+    "release:patch": "npm run build && npm version patch && npm publish",
     "rollup": "rollup -c rollup.config.js src/index.ts",
     "test": "NODE_ENV=testing jest -co --watch --notify"
   },
@@ -42,10 +46,11 @@
     "concurrently": "^5.3.0",
     "jest": "^26.4.2",
     "rollup": "^1.21.4",
+    "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-typescript2": "^0.27.2",
     "ts-node": "^8.4.1",
     "tslib": "^1.10.0",
-    "typescript": "^3.6.3"
+    "typescript": "^3.9.7"
   },
   "browserslist": {
     "production": [
@@ -62,7 +67,10 @@
   "eslintConfig": {
     "extends": [
       "@rob.hameetman/eslint-config"
-    ]
+    ],
+    "globals": {
+      "__DEV__": true
+    }
   },
   "eslintIgnore": [
     "dist"
