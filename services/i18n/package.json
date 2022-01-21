@@ -15,9 +15,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=testing jest -co --watch --notify"
+    "build": "@microfrontend-example service build",
+    "dev": "@microfrontend-example service dev",
+    "start": "@microfrontend-example service start",
+    "test": "@microfrontend-example service test"
   },
   "devDependencies": {
+    "@microfrontend-example/scripts": "^1.1.76",
     "@rob.hameetman/eslint-config": "0.0.11",
     "@types/node": "^12.7.5",
     "ts-node": "^8.4.1",

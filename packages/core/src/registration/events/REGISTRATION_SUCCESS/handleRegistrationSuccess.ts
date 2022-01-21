@@ -1,10 +1,18 @@
 import { RegistrationSuccessEvent } from '../../events';
-import { logEvent } from '../../../utils';
 
 export const handleRegistrationSuccess = (
   e: RegistrationSuccessEvent,
+  onRegistrationSuccess?: () => void,
 ): void => {
-  logEvent(e);
+  const { reject, resolve } = e.detail;
 
-  // TODO
+  try {
+    if (onRegistrationSuccess) {
+      onRegistrationSuccess();
+    }
+  
+    resolve();
+  } catch (error) {
+    reject(error);
+  }
 };

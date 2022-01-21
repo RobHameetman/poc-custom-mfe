@@ -1,11 +1,11 @@
 export const handleBeforeCompileTap = (): void => {
-	let tsMessagesResolver: (msgs: unknown) => void;
+  let tsMessagesResolver: (msgs: unknown) => void;
 
-	const tsMessagesPromise = new Promise((resolve) => {
-		tsMessagesResolver = (msgs: unknown) => resolve(msgs);
-	});
+  const tsMessagesPromise = new Promise((resolve) => {
+    tsMessagesResolver = (msgs: unknown) => resolve(msgs);
+  });
 
-	tsMessagesPromise.then(() => {
-		return tsMessagesResolver;
-	});
+  tsMessagesPromise.then(() => {
+    return tsMessagesResolver;
+  });
 };

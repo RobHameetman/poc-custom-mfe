@@ -1,8 +1,6 @@
 import {
-  CallHooksEventHandler,
-  CallHooksErrorEventHandler,
-  CallHooksResolvedEventHandler,
-  OrchestrationEventHandler,
+  OrchestrateEventHandler,
+  OrchestrationErrorEventHandler,
   ProcessOrchestrationQueueEventHandler,
   RerouteUrlOnlyEventHandler,
   SetOrchestratorListeningEventHandler,
@@ -10,11 +8,9 @@ import {
 import { OrchestrationEvents } from '../../enums';
 
 export interface OrchestrationEventHandlers {
-  [OrchestrationEvents.CALL_HOOKS]: CallHooksEventHandler;
-  [OrchestrationEvents.CALL_HOOKS_ERROR]: CallHooksErrorEventHandler;
-  [OrchestrationEvents.CALL_HOOKS_RESOLVED]: CallHooksResolvedEventHandler;
-  [OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE]: ProcessOrchestrationQueueEventHandler;
-  [OrchestrationEvents.REROUTE_URL_ONLY]: RerouteUrlOnlyEventHandler;
-  [OrchestrationEvents.SET_ORCHESTRATOR_LISTENING]: SetOrchestratorListeningEventHandler;
-  [key: string]: OrchestrationEventHandler;
+  readonly [OrchestrationEvents.ORCHESTRATE]?: OrchestrateEventHandler;
+  readonly [OrchestrationEvents.ORCHESTRATION_ERROR]?: OrchestrationErrorEventHandler;
+  readonly [OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE]?: ProcessOrchestrationQueueEventHandler;
+  readonly [OrchestrationEvents.REROUTE_URL_ONLY]?: RerouteUrlOnlyEventHandler;
+  readonly [OrchestrationEvents.SET_ORCHESTRATOR_LISTENING]?: SetOrchestratorListeningEventHandler;
 }

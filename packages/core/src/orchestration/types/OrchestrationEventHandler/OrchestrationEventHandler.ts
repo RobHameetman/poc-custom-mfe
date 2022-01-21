@@ -1,8 +1,7 @@
 import {
   $$InitEvent,
-  CallHooksEvent,
-  CallHooksErrorEvent,
-  CallHooksResolvedEvent,
+  OrchestrateEvent,
+  OrchestrationErrorEvent,
   DefineCustomElementsEvent,
   ProcessOrchestrationQueueEvent,
   RerouteUrlOnlyEvent,
@@ -10,9 +9,10 @@ import {
 } from '../../events';
 
 export type $$InitEventHandler = (e: $$InitEvent) => void;
-export type CallHooksEventHandler = (e: CallHooksEvent) => void;
-export type CallHooksErrorEventHandler = (e: CallHooksErrorEvent) => void;
-export type CallHooksResolvedEventHandler = (e: CallHooksResolvedEvent) => void;
+export type OrchestrateEventHandler = (e: OrchestrateEvent) => void;
+export type OrchestrationErrorEventHandler = (
+  e: OrchestrationErrorEvent,
+) => void;
 export type DefineCustomElementsEventHandler = (
   e: DefineCustomElementsEvent,
 ) => void;
@@ -28,9 +28,8 @@ export type SetOrchestratorListeningEventHandler = (
 
 export type OrchestrationEventHandler =
   | $$InitEventHandler
-  | CallHooksEventHandler
-  | CallHooksErrorEventHandler
-  | CallHooksResolvedEventHandler
+  | OrchestrateEventHandler
+  | OrchestrationErrorEventHandler
   | DefineCustomElementsEventHandler
   | ProcessOrchestrationQueueEventHandler
   | RerouteUrlOnlyEventHandler

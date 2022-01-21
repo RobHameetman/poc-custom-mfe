@@ -1,17 +1,6 @@
 version: '3'
 
 services:
-  admin:
-    build:
-      context: ./apps/admin
-      args:
-        NODE_ENV: 'production'
-    container_name: mfe-app-admin
-    command: npm start
-    tty: true
-    ports:
-      - 3001:3001
-
   auth:
     build:
       context: ./services/auth
@@ -26,17 +15,6 @@ services:
     volumes:
       - $PWD/view/node_modules:/home/view/node_modules
       - $PWD/view:/home/view
-
-  billing:
-    build:
-      context: ./apps/billing
-      args:
-        NODE_ENV: 'production'
-    container_name: mfe-app-billing
-    command: npm start
-    tty: true
-    ports:
-      - 3003:3003
 
   data:
     build:
@@ -61,12 +39,12 @@ services:
     ports:
       - 3005:3005
 
-  shell:
+  app:
     build:
-      context: ./shell
+      context: ./app
       args:
         NODE_ENV: 'production'
-    container_name: mfe-shell
+    container_name: mfe-app
     command: npm start
     tty: true
     ports:

@@ -1,11 +1,11 @@
-import { AppEntrypointElement } from '../../components';
+import { AppContainerElement } from '../../components';
 
-export const getMountNode = (): AppEntrypointElement => {
-  const $mountNode = document.querySelector('app-entrypoint');
+export const getMountNode = (): AppContainerElement => {
+  const $mountNode = document.querySelector('app-container');
 
   if (!$mountNode) {
-    throw Error('Could not find <app-entrypoint>');
+    throw Error('Could not find <app-container>');
   }
 
-  return $mountNode as AppEntrypointElement;
+  return $mountNode as AppContainerElement;
 };

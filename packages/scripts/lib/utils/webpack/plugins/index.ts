@@ -1,3 +1,4 @@
+export * from './browserPlugin';
 export * from './definePlugin';
 export * from './forkTsCheckerWebpackPlugin';
 export * from './htmlWebpackPlugin';

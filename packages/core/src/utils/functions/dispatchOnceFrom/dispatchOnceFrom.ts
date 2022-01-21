@@ -1,12 +1,11 @@
 import { dispatchOnce } from '../dispatchOnce';
-import { DispatchOnceFn } from '../../types';
 
-export const dispatchOnceFrom = (namespace: string): DispatchOnceFn => <T>(
+export const dispatchOnceFrom = (namespace: string): typeof dispatchOnce => <T>(
   type: string,
   listener: EventListenerOrEventListenerObject,
   detail: T,
-): void | never => {
+): Promise<void> => {
   const eventName = `${namespace}:${type}`;
 
-  dispatchOnce(eventName, listener, detail);
+  return dispatchOnce<T>(eventName, listener, detail);
 };

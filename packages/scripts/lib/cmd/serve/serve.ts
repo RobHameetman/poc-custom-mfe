@@ -1,10 +1,10 @@
-import { BuildEnv, Bundler, createBuildPipeline } from '../../utils';
+import { Bundler, NodeEnv, Structure, createBuildPipeline } from '../../utils';
 
-export const serve = async (buildEnv: BuildEnv): Promise<void> => {
+export const serve = async (structure: Structure, buildEnv: NodeEnv): Promise<void> => {
   console.clear();
   console.log('Starting an optimized development server...\n');
 
-  const pipeline = await createBuildPipeline(buildEnv, Bundler.Webpack);
+  const pipeline = await createBuildPipeline(buildEnv, Bundler.Webpack, true);
 
   await pipeline.serve(buildEnv);
 };

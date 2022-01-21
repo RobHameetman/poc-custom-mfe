@@ -1,6 +1,6 @@
 import { Registry } from '../../types';
-import { DispatchFn, dispatchFrom } from '../../../utils';
+import { dispatchFrom } from '../../../utils';
 
-export const getRegistryDispatch = (): DispatchFn => {
+export const getRegistryDispatch = (): ReturnType<typeof dispatchFrom> => {
   return dispatchFrom(Registry.namespace);
 };

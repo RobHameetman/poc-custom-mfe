@@ -1,0 +1,38 @@
+{
+  "name": "@microfrontend-example/jsx",
+  "version": "0.0.1",
+  "description": "JSX rendering logic for Omniframe.",
+  "author": "Robert H. Hameetman <robert.hameetman@omniframe.org>",
+  "homepage": "https://www.onmiframe.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omniframe/omniframe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/omniframe/omniframe/issues"
+  },
+  "main": "./dist/prod/core.esm.js",
+  "module": "./dist/dev/core.umd.js",
+  "typings": "./dist/declarations/index.d.ts",
+  "scripts": {
+    "build": "concurrently npm:build:dev npm:build:prod",
+    "build:dev": "NODE_ENV=development npm run rollup",
+    "build:prod": "NODE_ENV=production npm run rollup",
+    "release": "npm run release:patch",
+    "release:major": "npm run build && npm version major && npm publish",
+    "release:minor": "npm run build && npm version minor && npm publish",
+    "release:patch": "npm run build && npm version patch && npm publish",
+    "rollup": "rollup -c rollup.config.js src/index.ts"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@types/node": "^14.10.3",
+    "concurrently": "^5.3.0",
+    "rollup": "^2.27.0",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "typescript": "^4.0.2"
+  }
+}

@@ -1,2 +1,3 @@
-export const importFrom = async <T = void>(path: string): Promise<T> =>
-  System.import(path);
+export const importFrom = async <T extends System.Module = System.Module>(
+  path: string,
+): Promise<T> => System.import(path);

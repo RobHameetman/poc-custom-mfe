@@ -1,19 +1,20 @@
-import { dispatchFrom } from '../dispatchFrom';
-import { Handler, Handlers, SET_LISTENING } from '../../types';
+import { Handler, Handlers, NamespacedHandlers } from '../../types';
 
 export const addEventListeners = <H extends Handler & EventListener>(
   isListening: boolean,
-  handlers: Handlers,
-  namespace: string,
-  SET_LISTENING: SET_LISTENING
+  namespacedHandlers: NamespacedHandlers,
+  onListenersAdded: () => void,
 ): void => {
   if (!isListening) {
-    Object.entries(handlers).forEach(([type, handler]: [string, H]): void =>
-      document.addEventListener(`${namespace}:${type}`, handler as EventListener)
+    Object.entries(namespacedHandlers).forEach(([namespace, handlers]: [string, Handlers | undefined]): void =>
+        Object.entries(handlers ? handlers : {}).forEach(([type, handler]: [string, H]): void =>
+        document.addEventListener(
+          `${namespace}:${type}`,
+          handler as EventListener,
+        ),
+      )
     );
 
-    const dispatch = dispatchFrom(namespace);
-
-    dispatch(SET_LISTENING, { value: true });
+    onListenersAdded();
   }
 };

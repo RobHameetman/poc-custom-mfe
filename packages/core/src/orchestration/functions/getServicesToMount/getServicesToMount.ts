@@ -1,10 +1,10 @@
 import { ServiceValidationFn } from '../../types';
 import { Registry } from '../../../registration';
-import { Service, ServiceStatuses } from '../../../services';
+import { AppFrameElement, ServiceStatuses } from '../../../services';
 
 export const getServicesToMount = (
   validateService: ServiceValidationFn,
-): Array<Service> => {
+): Array<AppFrameElement> => {
   return Registry.filter(
     (service) =>
       service.status === ServiceStatuses.LOADED &&

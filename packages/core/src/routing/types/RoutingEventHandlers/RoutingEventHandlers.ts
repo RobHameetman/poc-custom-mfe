@@ -1,9 +1,12 @@
-import { RoutingEventHandler } from '../RoutingEventHandler';
+import {
+  ActivateRouteEventHandler,
+  NavigateEventHandler,
+  SetRouterListeningEventHandler,
+} from '../RoutingEventHandler';
 import { RoutingEvents } from '../../enums';
-import { NavigateToUrlEventHandler, SetRouterListeningEventHandler } from '../RoutingEventHandler';
 
 export interface RoutingEventHandlers {
-  [RoutingEvents.NAVIGATE_TO_URL]: NavigateToUrlEventHandler;
-  [RoutingEvents.SET_ROUTER_LISTENING]: SetRouterListeningEventHandler;
-  [key: string]: RoutingEventHandler;
+  readonly [RoutingEvents.ACTIVATE_ROUTE]: ActivateRouteEventHandler;
+  readonly [RoutingEvents.NAVIGATE]: NavigateEventHandler;
+  readonly [RoutingEvents.SET_ROUTER_LISTENING]: SetRouterListeningEventHandler;
 }

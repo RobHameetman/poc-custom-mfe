@@ -1,0 +1,22 @@
+{
+  "name": "@microfrontend-example/create-component",
+  "version": "1.0.0-alpha.1",
+  "description": "A robust project starter template for quick and easy setup.",
+  "author": "Robert H. Hameetman <robert.hameetman@omniframe.org>",
+  "homepage": "https://www.onmiframe.org",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omniframe/omniframe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/omniframe/omniframe/issues"
+  },
+  "scripts": {
+    "build": "echo \"Error: no build specified\" && exit 1",
+    "deploy": "echo \"Error: no deployment specified\" && exit 1",
+    "release": "echo \"Error: no release specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -1,4 +1,4 @@
-import { Service } from '../../../services';
+import { AppFrameElement } from '../../../services';
 
 export interface ImportedHooks {
   boot: BootHook | null;
@@ -6,7 +6,7 @@ export interface ImportedHooks {
   unmount: UnmountHook | null;
 }
 
-export type LoadHook<T = object> = (props: T) => Promise<Service<T>>;
+export type LoadHook<T = object> = (props: T) => Promise<AppFrameElement>;
 export type BootHook = () => Promise<void>;
 export type MountHook = () => Promise<HTMLDivElement>;
 export type UnmountHook = () => Promise<void>;

@@ -1,26 +1,23 @@
 import { handle$$Init } from './handle$$Init';
 import { Namespaces, OrchestrationEvents } from '../../enums';
-import { dispatchOnce } from '../../../utils';
+import { AsyncDetail, dispatchOnce } from '../../../utils';
 
 export const $$INIT = `${Namespaces.App}:${OrchestrationEvents.$$INIT}`;
 export type $$INIT = typeof $$INIT;
 
-export interface $$InitEvent extends CustomEvent<$$InitEventDetail> {
-  type: $$INIT;
+export interface $$InitEvent
+  extends CustomEvent<AsyncDetail<$$InitEventDetail>> {
+  readonly type: $$INIT;
 }
 
-export interface $$InitEventDetail {
-  resolve: typeof Promise.resolve;
-}
+export interface $$InitEventDetail {}
 
 export const $$init = async (): Promise<void> => {
-  return new Promise((resolve) => {
-    dispatchOnce(
-      $$INIT,
-      handle$$Init as EventListenerOrEventListenerObject,
-      { resolve },
-    );
-  });
+  return dispatchOnce<$$InitEventDetail>(
+    $$INIT,
+    handle$$Init as EventListenerOrEventListenerObject,
+    {},
+  );
 };
 
 export const is$$InitEvent = (value: unknown): value is $$InitEvent => {

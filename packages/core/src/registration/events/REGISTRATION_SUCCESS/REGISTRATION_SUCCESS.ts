@@ -1,16 +1,25 @@
 import { RegistrationEvents } from '../../enums';
-import { dispatchFrom } from '../../../utils';
+import { Registry } from '../../types';
+import { AppFrameElement } from '../../../services';
+import { AsyncDetail, dispatch } from '../../../utils';
 
-export type RegistrationSuccessEvent = CustomEvent<null>;
+export const REGISTRATION_SUCCESS = `${Registry.namespace}:${RegistrationEvents.REGISTRATION_SUCCESS}`;
+export type REGISTRATION_SUCCESS = typeof REGISTRATION_SUCCESS;
 
-export const registrationSuccess = (service: string) => {
-  const dispatch = dispatchFrom(service);
+export type RegistrationSuccessEvent = CustomEvent<
+  AsyncDetail<RegistrationSuccessEventDetail>
+>;
 
-  dispatch(RegistrationEvents.REGISTRATION_SUCCESS, null);
-};
+export interface RegistrationSuccessEventDetail {
+  readonly frame: AppFrameElement;
+}
 
-export const registrationSuccessFrom = (service: string) => () => {
-  registrationSuccess(service);
+export const registrationSuccess = async (
+  frame: AppFrameElement,
+): Promise<void> => {
+  return dispatch<RegistrationSuccessEventDetail>(REGISTRATION_SUCCESS, {
+    frame,
+  });
 };
 
 export const isRegistrationSuccessEvent = (

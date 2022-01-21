@@ -1,11 +1,7 @@
 export * from './$$INIT';
-export * from './CALL_HOOKS';
-export * from './CALL_HOOKS_ERROR';
-export * from './CALL_HOOKS_RESOLVED';
+export * from './ORCHESTRATE';
+export * from './ORCHESTRATION_ERROR';
 export * from './DEFINE_CUSTOM_ELEMENTS';
 export * from './PROCESS_ORCHESTRATION_QUEUE';
-export * from '../../rendering/events/RENDER';
 export * from './REROUTE_URL_ONLY';
 export * from './SET_ORCHESTRATOR_LISTENING';
-// export * from './START';
-// export * from './STOP';

@@ -1,8 +1,5 @@
 import {
-  ImportChunkFn,
-  ImportEntrypointFn,
-  ImportManifestFn,
-  ImportStylesheetFn,
+  ImportFn,
 } from '../../../services';
 import { RouteValidationFn } from '../../../routing/types/RouteValidationFn';
 
@@ -11,10 +8,7 @@ export interface RegisterServiceInput<T = Record<string, unknown>> {
   manifest: string;
   activeWhen: RouteValidationFn;
   customProps?: T;
-  importChunk?: ImportChunkFn;
-  importEntrypoint?: ImportEntrypointFn;
-  importManifest?: ImportManifestFn;
-  importStylesheet?: ImportStylesheetFn;
+  importFn?: ImportFn;
 }
 
 export const isRegisterServiceInput = <T = Record<string, unknown>>(

@@ -1,18 +1,21 @@
 import { Namespaces, OrchestrationEvents } from '../../enums';
-import { dispatch } from '../../../utils';
+import { AsyncDetail, dispatch } from '../../../utils';
 
 export const PROCESS_ORCHESTRATION_QUEUE = `${Namespaces.App}:${OrchestrationEvents.PROCESS_ORCHESTRATION_QUEUE}`;
 export type PROCESS_ORCHESTRATION_QUEUE = typeof PROCESS_ORCHESTRATION_QUEUE;
 
 export interface ProcessOrchestrationQueueEvent
-  extends CustomEvent<ProcessOrchestrationQueueEventDetail> {
-  type: PROCESS_ORCHESTRATION_QUEUE;
+  extends CustomEvent<AsyncDetail<ProcessOrchestrationQueueEventDetail>> {
+  readonly type: PROCESS_ORCHESTRATION_QUEUE;
 }
 
-export type ProcessOrchestrationQueueEventDetail = null;
+export interface ProcessOrchestrationQueueEventDetail {}
 
-export const processOrchestrationQueue = (): void => {
-  dispatch(PROCESS_ORCHESTRATION_QUEUE, null);
+export const processOrchestrationQueue = async (): Promise<void> => {
+  return dispatch<ProcessOrchestrationQueueEventDetail>(
+    PROCESS_ORCHESTRATION_QUEUE,
+    {},
+  );
 };
 
 export const isProcessOrchestrationQueueEvent = (

@@ -1,5 +1,5 @@
 import { build, serve, test } from './cmd';
-import { BuildEnvs, NODE_ENV } from './utils';
+import { Cmds, NODE_ENV, NodeEnvs, Structures, isStructure, loadDotenv } from './utils';
 
 /**
  * Makes the script crash on unhandled rejections instead of silently
@@ -12,18 +12,25 @@ process.on('unhandledRejection', (err) => {
 
 try {
   (async (): Promise<void> => {
-    const script = process.argv[2];
+    const structure = process.argv[2] || Structures.service;
+    const cmd = process.argv[3] || Cmds.start;
 
-    if (script) {
-      switch (script) {
+    if (!isStructure(structure)) {
+      throw Error(`Argument "${structure}" is not a valid structure`);
+    }
+
+    loadDotenv();
+
+    if (cmd) {
+      switch (cmd) {
         case 'build':
-          await build(NODE_ENV);
+          await build(structure, NODE_ENV);
           break;
         case 'dev':
-          await serve(BuildEnvs.development);
+          await serve(structure, NodeEnvs.development);
           break;
         case 'start':
-          await serve(BuildEnvs.production);
+          await serve(structure, NodeEnvs.production);
           break;
         case 'test':
           await test();

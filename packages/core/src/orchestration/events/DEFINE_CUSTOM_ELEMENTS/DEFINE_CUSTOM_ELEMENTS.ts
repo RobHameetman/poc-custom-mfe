@@ -1,34 +1,33 @@
 import { handleDefineCustomElements } from './handleDefineCustomElements';
 import { Namespaces, OrchestrationEvents } from '../../enums';
-import { CustomElementConstructor } from '../../../rendering';
-import { dispatchOnce } from '../../../utils';
+import { CustomElementConstructor } from '../../types';
+import { AsyncDetail, dispatchOnce } from '../../../utils';
 
 export const DEFINE_CUSTOM_ELEMENTS = `${Namespaces.App}:${OrchestrationEvents.DEFINE_CUSTOM_ELEMENTS}`;
 export type DEFINE_CUSTOM_ELEMENTS = typeof DEFINE_CUSTOM_ELEMENTS;
 
 export interface DefineCustomElementsEvent
-  extends CustomEvent<
-    | DefineCustomElementsEventDetail
-    | ReadonlyArray<DefineCustomElementsEventDetail>
-  > {
-  type: DEFINE_CUSTOM_ELEMENTS;
+  extends CustomEvent<AsyncDetail<DefineCustomElementsEventDetail>> {
+  readonly type: DEFINE_CUSTOM_ELEMENTS;
 }
 
 export interface DefineCustomElementsEventDetail {
+  readonly elements: CustomElementAgent | ReadonlyArray<CustomElementAgent>;
+}
+
+export interface CustomElementAgent {
   readonly $element: CustomElementConstructor;
   readonly options?: ElementDefinitionOptions;
   readonly tag: string;
 }
 
-export const defineCustomElements = (
-  detail:
-    | DefineCustomElementsEventDetail
-    | ReadonlyArray<DefineCustomElementsEventDetail>,
-): void => {
-  dispatchOnce(
+export const defineCustomElements = async (
+  elements: CustomElementAgent | ReadonlyArray<CustomElementAgent>,
+): Promise<void> => {
+  return dispatchOnce<DefineCustomElementsEventDetail>(
     DEFINE_CUSTOM_ELEMENTS,
     handleDefineCustomElements as EventListenerOrEventListenerObject,
-    detail,
+    { elements },
   );
 };
 

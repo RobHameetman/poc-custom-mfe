@@ -1,11 +1,11 @@
 import { dispatch } from '../dispatch';
 
-export const dispatchOnce = <T>(
+export const dispatchOnce = async <T>(
   type: string,
   listener: EventListenerOrEventListenerObject,
   detail: T,
-): void | never => {
+): Promise<void> => {
   document.addEventListener(type, listener);
-  dispatch(type, detail);
   setTimeout(() => document.removeEventListener(type, listener), 100);
+  return dispatch<T>(type, detail);
 };

@@ -1,16 +1,28 @@
 import { RegistrationEvents } from '../../enums';
-import { dispatchFrom } from '../../../utils';
+import { Registry } from '../../types';
+import { AppFrameElement } from '../../../services';
+import { AsyncDetail, dispatch } from '../../../utils';
 
-export type RegistrationErrorEvent = CustomEvent<null>;
+export const REGISTRATION_ERROR = `${Registry.namespace}:${RegistrationEvents.REGISTRATION_ERROR}`;
+export type REGISTRATION_ERROR = typeof REGISTRATION_ERROR;
 
-export const registrationError = (service: string) => {
-  const dispatch = dispatchFrom(service);
+export type RegistrationErrorEvent = CustomEvent<
+  AsyncDetail<RegistrationErrorEventDetail>
+>;
 
-  dispatch(RegistrationEvents.REGISTRATION_ERROR, null);
-};
+export interface RegistrationErrorEventDetail {
+  readonly error: Error;
+  readonly frame: AppFrameElement;
+}
 
-export const registrationErrorFrom = (service: string) => () => {
-  registrationError(service);
+export const registrationError = async (
+  frame: AppFrameElement,
+  error: Error,
+): Promise<void> => {
+  return dispatch<RegistrationErrorEventDetail>(REGISTRATION_ERROR, {
+    error,
+    frame,
+  });
 };
 
 export const isRegistrationErrorEvent = (

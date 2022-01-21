@@ -1,25 +1,30 @@
 import { RegistrationEvents } from '../../enums';
-import { RegisterServiceInput, Registry } from '../../types';
-import { dispatchOnceFrom } from '../../../utils';
+import { Registry } from '../../types';
+import { AppRouterElement } from '../../../routing';
+import { AppFrameElement } from '../../../services';
+import { AsyncDetail, dispatchOnceFrom } from '../../../utils';
 
-export type RegisterEvent = CustomEvent<RegisterServiceInput>;
+export type RegisterEvent = CustomEvent<AsyncDetail<RegisterEventDetail>>;
 
-export const registerFrom = (service: string) => (
-  serviceArgs: RegisterServiceInput,
-) => {
-  register(service, serviceArgs);
+export type Registrar = Registry | AppRouterElement;
+
+export interface RegisterEventDetail {
+  readonly frame: AppFrameElement;
+}
+
+export const registerFrom = (frame: AppFrameElement) => async (): Promise<
+  void
+> => {
+  return register(frame);
 };
 
-export const register = <T = Record<string, unknown>>(
-  service: string,
-  serviceArgs: RegisterServiceInput<T>,
-) => {
-  const dispatch = dispatchOnceFrom(service);
+export const register = async (frame: AppFrameElement): Promise<void> => {
+  const dispatch = dispatchOnceFrom(frame.name);
 
-  dispatch(
+  return dispatch<RegisterEventDetail>(
     RegistrationEvents.REGISTER,
-    Registry.tryToRegisterService,
-    serviceArgs,
+    Registry.handleRegister,
+    { frame },
   );
 };
 

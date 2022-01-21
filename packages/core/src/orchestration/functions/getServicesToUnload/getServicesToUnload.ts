@@ -1,7 +1,7 @@
 import { Registry } from '../../../registration';
-import { Service, ServiceStatuses } from '../../../services';
+import { AppFrameElement, ServiceStatuses } from '../../../services';
 
-export const getServicesToUnload = (): Array<Service> => {
+export const getServicesToUnload = (): Array<AppFrameElement> => {
   return Registry.filter(
     (service) => service.status === ServiceStatuses.LOAD_ERROR,
   );

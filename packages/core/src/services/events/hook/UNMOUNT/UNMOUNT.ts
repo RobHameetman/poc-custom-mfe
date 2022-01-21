@@ -1,12 +1,17 @@
+import { AppFrameElement } from '../../../components';
 import { ServiceHookEvents } from '../../../enums';
-import { dispatchFrom } from '../../../../utils';
+import { AsyncDetail, dispatchFrom } from '../../../../utils';
 
-export type UnmountEvent = CustomEvent<null>;
+export type UnmountEvent = CustomEvent<AsyncDetail<UnmountEventDetail>>;
 
-export const unmount = (service: string) => {
-  const dispatch = dispatchFrom(service);
+export interface UnmountEventDetail {
+  readonly frame: AppFrameElement;
+}
 
-  dispatch(ServiceHookEvents.UNMOUNT, null);
+export const unmount = async (frame: AppFrameElement): Promise<void> => {
+  const dispatch = dispatchFrom(frame.name);
+
+  return dispatch<UnmountEventDetail>(ServiceHookEvents.UNMOUNT, { frame });
 };
 
 export const isUnmountEvent = (value: unknown): value is UnmountEvent => {

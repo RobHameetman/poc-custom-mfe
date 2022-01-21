@@ -4,19 +4,10 @@ import {
   MountEvent,
   UnloadEvent,
   UnmountEvent,
-  ImportChunkEvent,
-  ImportChunkErrorEvent,
-  ImportChunkSuccessEvent,
-  ImportEntrypointEvent,
-  ImportEntrypointErrorEvent,
-  ImportEntrypointSuccessEvent,
-  ImportManifestEvent,
-  ImportManifestErrorEvent,
-  ImportManifestSuccessEvent,
-  ImportStylesheetEvent,
-  ImportStylesheetErrorEvent,
-  ImportStylesheetSuccessEvent,
-  ChangeStatusEvent,
+  FetchManifestEvent,
+  FetchManifestErrorEvent,
+  FetchManifestSuccessEvent,
+  ImportEvent,
 } from '../../events';
 
 export type ServiceEvent =
@@ -25,16 +16,7 @@ export type ServiceEvent =
   | MountEvent
   | UnloadEvent
   | UnmountEvent
-  | ImportChunkEvent
-  | ImportChunkErrorEvent
-  | ImportChunkSuccessEvent
-  | ImportEntrypointEvent
-  | ImportEntrypointErrorEvent
-  | ImportEntrypointSuccessEvent
-  | ImportManifestEvent
-  | ImportManifestErrorEvent
-  | ImportManifestSuccessEvent
-  | ImportStylesheetEvent
-  | ImportStylesheetErrorEvent
-  | ImportStylesheetSuccessEvent
-  | ChangeStatusEvent;
+  | FetchManifestEvent
+  | FetchManifestErrorEvent
+  | FetchManifestSuccessEvent
+  | ImportEvent;

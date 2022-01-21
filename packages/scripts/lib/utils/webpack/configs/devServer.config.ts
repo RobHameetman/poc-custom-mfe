@@ -42,14 +42,25 @@ export const configureDevServer = async (
     compress: true,
     contentBase: PATHS_APP_PUBLIC_DIR,
     contentBasePublicPath: PUBLIC_PATH,
-    disableHostCheck: !proxy || process.env.DANGEROUSLY_DISABLE_HOST_CHECK === 'true',
+    disableHostCheck: true,
+    headers: {
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Origin': '*',
+    },
     historyApiFallback: {
       disableDotRule: true,
       index: PUBLIC_PATH,
     },
     hot: true,
-    https: false, // https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/config/getHttpsConfig.js
+    https: false,
     injectClient: false,
+    open: {
+      app: [
+        'Google Chrome',
+        '--disable-web-security', // to enable CORS
+      ],
+    },
     overlay: false,
     proxy,
     public: allowedHost,
@@ -61,7 +72,9 @@ export const configureDevServer = async (
     transportMode: 'ws',
     watchContentBase: true,
     watchOptions: {
+      aggregateTimeout: 300,
       ignored: ignoredFiles(PATHS_APP_SRC_DIR),
+      poll: 1000,
     },
   };
 };

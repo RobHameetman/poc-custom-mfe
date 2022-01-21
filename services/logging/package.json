@@ -1,0 +1,70 @@
+{
+  "name": "@microfrontend-example/logging",
+  "version": "1.0.0",
+  "description": "A service for monitoring and logging console errors in the cloud",
+  "author": "Robert H. Hameetman <engineering@robhameetman.com>",
+  "homepage": "https://www.robhameetman.com/",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobHameetman/packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RobHameetman/packages/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "@microfrontend-example service build",
+    "dev": "@microfrontend-example service dev",
+    "start": "@microfrontend-example service start",
+    "test": "@microfrontend-example service test"
+  },
+  "devDependencies": {
+    "@microfrontend-example/scripts": "^1.1.76",
+    "@rob.hameetman/eslint-config": "0.0.11",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^12.7.5",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "@rob.hameetman/eslint-config"
+    ]
+  },
+  "eslintIgnore": [
+    "dist"
+  ],
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 2
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/?*.spec.ts"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
+  }
+}

@@ -1,8 +1,8 @@
-import { getBuildEnv, isDevelopment } from '../../enums';
+import { NODE_ENV, isDevelopment } from '../../enums';
 import { importPackageJson } from '../importPackageJson';
 
 const stubUrl = 'http://localhost:3000';
-const mode = getBuildEnv();
+const mode = NODE_ENV;
 let publicUrl = process.env.PUBLIC_URL;
 
 export const getPublicUrl = async (): Promise<string> => {

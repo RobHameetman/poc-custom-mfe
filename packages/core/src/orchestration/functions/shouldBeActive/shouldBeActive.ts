@@ -1,8 +1,9 @@
-import { Service } from '../../../services';
+import { AppFrameElement } from '../../../services';
 
-export const shouldBeActive = (service: Service): boolean => {
+export const shouldBeActive = (_: AppFrameElement): boolean => {
   try {
-    return service.activeWhen(window.location);
+    // return service.activeWhen(window.location);
+    return true;
   } catch (err) {
     // TODO: Handle error
 

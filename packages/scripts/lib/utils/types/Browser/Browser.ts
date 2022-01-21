@@ -1,13 +1,18 @@
 import open from 'open';
 
 export class Browser {
-	url = '';
+  url = '';
 
-	async open(host: string, port: string | number): Promise<void> {
-		return new Promise((resolve, reject) => {
-			this.url = `${host}:${port}/`;
+  async open(host: string, port: string | number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.url = `${host}:${port}/`;
 
-			open(this.url);
-		});
-	}
+      open(this.url, {
+        app: [
+          'google chrome',
+          '--disable-web-security', // to enable CORS
+        ],
+      });
+    });
+  }
 }

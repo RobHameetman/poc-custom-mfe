@@ -1,7 +1,5 @@
-import { getBuildEnv } from './BuildEnvs';
+import { NODE_ENV } from './NodeEnvs';
 import { WebpackEnv } from '../types';
-
-export const NODE_ENV = getBuildEnv();
 
 export const { WDS_SOCKET_HOST } = process.env;
 export const { WDS_SOCKET_PATH } = process.env;

@@ -1,28 +1,17 @@
-import { isRegisterServiceInput } from '../RegisterServiceInput';
-import { RegistrationEventHandlers } from '../RegistrationEventHandlers';
 import { RegistrationEvents } from '../../enums';
 import {
-  AddServiceEvent,
-  RegisterEvent,
-  RegistrationErrorEvent,
-  RegistrationSuccessEvent,
-  RemoveServiceEvent,
+  UnregisterEvent,
   SetRegistryListeningEvent,
-  handleAddService,
-  handleRegistrationError,
-  handleRegistrationSuccess,
-  handleRemoveService,
+  handleRegister,
+  handleUnregister,
   handleSetRegistryListening,
-  isAddServiceEvent,
-  isRegistrationErrorEvent,
-  isRegistrationSuccessEvent,
-  isRemoveServiceEvent,
+  isRegisterEvent,
+  isUnregisterEvent,
   isSetRegistryListeningEvent,
 } from '../../events';
-import { getRegistryDispatch } from '../../functions';
 import { Namespaces } from '../../../orchestration';
-import { Service } from '../../../services';
-import { addEventListeners, dispatchFrom } from '../../../utils';
+import { AppFrameElement } from '../../../services';
+import { NamespacedHandlers, addEventListeners } from '../../../utils';
 
 export class Registry {
   public static readonly namespace = Namespaces.Registry;
@@ -38,147 +27,152 @@ export class Registry {
     return this._instance;
   }
 
-  public static get services(): ReadonlyArray<Service> {
-    return this._instance._services;
+  public static get services(): Array<AppFrameElement> {
+    return Registry._instance._services;
   }
 
-  private _services: Array<Service> = [];
+  public get services(): Array<AppFrameElement> {
+    return this._services;
+  }
+
+  private _services: Array<AppFrameElement> = [];
   private _listening = false;
 
-  private _handlers: RegistrationEventHandlers = {
-    [RegistrationEvents.ADD_SERVICE]: (e) => this._handleAddService(e),
-    [RegistrationEvents.REGISTRATION_ERROR]: (e) =>
-      this._handleRegistrationSuccess(e),
-    [RegistrationEvents.REGISTRATION_SUCCESS]: (e) =>
-      this._handleRegistrationError(e),
-    [RegistrationEvents.REMOVE_SERVICE]: (e) => this._handleRemoveService(e),
-    [RegistrationEvents.SET_REGISTRY_LISTENING]: (e) =>
-      this._handleSetRegistryListening(e),
+  private _handlers: NamespacedHandlers = {
+    [Registry.namespace]: {
+      [RegistrationEvents.REGISTER]: (e) => this._handleRegister(e),
+      [RegistrationEvents.UNREGISTER]: (e) => this._handleUnregister(e),
+      [RegistrationEvents.SET_REGISTRY_LISTENING]: (e) =>
+        this._handleSetRegistryListening(e),
+    },
   };
 
-  private constructor() {}
+  private constructor() {
+    this._addEventListeners();
+  }
+
+  public static handleRegister = (e: Event): void => {
+    Registry._instance._handleRegister(e);
+  };
 
   public static asyncMap<U>(
     callback: (
-      service: Service,
+      service: AppFrameElement,
       index: number,
-      arr: Array<Service>,
+      arr: Array<AppFrameElement>,
     ) => Promise<U>,
-    services: Array<Service> = this._instance._services,
+    registry = Registry._instance,
   ): Array<Promise<U>> {
-    return services.map<Promise<U>>(callback);
+    return registry.map<Promise<U>>(callback);
   }
 
   public static find(
-    callback: (service: Service, index: number, arr: Array<Service>) => boolean,
-    services: Array<Service> = this._instance._services,
-  ): Service | undefined {
-    return services.find(callback);
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => boolean,
+    registry = Registry._instance,
+  ): AppFrameElement | undefined {
+    return registry.find(callback);
   }
 
   public static filter(
-    callback: (service: Service, index: number, arr: Array<Service>) => void,
-    services: Array<Service> = this._instance._services,
-  ): Array<Service> {
-    return services.filter(callback);
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => void,
+    registry = Registry._instance,
+  ): Array<AppFrameElement> {
+    return registry.filter(callback);
   }
 
   public static forEach(
-    callback: (service: Service, index: number, arr: Array<Service>) => void,
-    services: Array<Service> = this._instance._services,
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => void,
+    registry = Registry._instance,
   ): void {
-    services.forEach(callback);
+    return registry.forEach(callback);
   }
 
   public static map<U>(
-    callback: (service: Service, index: number, arr: Array<Service>) => U,
-    services: Array<Service> = this._instance._services,
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => U,
+    registry = Registry._instance,
   ): Array<U> {
-    return services.map<U>(callback);
+    return registry.map<U>(callback);
   }
 
-  public static tryToRegisterService(e: Event): void {
-    const dispatch = getRegistryDispatch();
-
-    try {
-      const { detail } = e as RegisterEvent;
-
-      if (isRegisterServiceInput(detail)) {
-        const {
-          name,
-          manifest,
-          activeWhen,
-          customProps,
-          importChunk,
-          importEntrypoint,
-          importManifest,
-          importStylesheet,
-        } = detail;
-
-        const service = new Service(
-          name,
-          manifest,
-          activeWhen,
-          importChunk,
-          importEntrypoint,
-          importManifest,
-          importStylesheet,
-          customProps,
-        );
-
-        dispatch(RegistrationEvents.ADD_SERVICE, service);
-      }
-    } catch (err) {
-      dispatch(RegistrationEvents.REGISTRATION_ERROR, err);
-    }
+  public asyncMap<U>(
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => Promise<U>,
+  ): Array<Promise<U>> {
+    return this._services.map<Promise<U>>(callback);
   }
 
-  public addEventListeners() {
+  public find(
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => boolean,
+  ): AppFrameElement | undefined {
+    return this._services.find(callback);
+  }
+
+  public filter(
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => void,
+  ): Array<AppFrameElement> {
+    return this._services.filter(callback);
+  }
+
+  public forEach(
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => void,
+  ): void {
+    return this._services.forEach(callback);
+  }
+
+  public map<U>(
+    callback: (
+      service: AppFrameElement,
+      index: number,
+      arr: Array<AppFrameElement>,
+    ) => U,
+  ): Array<U> {
+    return this._services.map<U>(callback);
+  }
+
+  private _addEventListeners() {
     if (!this._listening) {
       addEventListeners(
         this._listening,
         this._handlers,
-        Registry.namespace,
-        RegistrationEvents.SET_REGISTRY_LISTENING,
+        this._onListenersAdded,
       );
     }
   }
 
-  private _addService = <T = Record<string, unknown>>(
-    service: Service<T>,
-  ): void => {
-    this._services.push(service as Service);
-  };
-
-  private _dispatch = <T>(type: string, detail: T): void | never => {
-    const dispatch = dispatchFrom(Registry.namespace);
-
-    dispatch(type, detail);
-  };
-
-  private _handleAddService<T = Record<string, unknown>>(
-    e: AddServiceEvent<T>,
-  ): void {
-    if (isAddServiceEvent<T>(e)) {
-      handleAddService<T>(e, this._addService, this._dispatch);
-    }
-  }
-
-  private _handleRegistrationError(e: RegistrationErrorEvent): void {
-    if (isRegistrationErrorEvent(e)) {
-      handleRegistrationError(e);
-    }
-  }
-
-  private _handleRegistrationSuccess(e: RegistrationSuccessEvent): void {
-    if (isRegistrationSuccessEvent(e)) {
-      handleRegistrationSuccess(e);
-    }
-  }
-
-  private _handleRemoveService(e: RemoveServiceEvent): void {
-    if (isRemoveServiceEvent(e)) {
-      handleRemoveService(e);
+  private _handleRegister(e: Event): void {
+    if (isRegisterEvent(e)) {
+      handleRegister(e, this._onRegister);
     }
   }
 
@@ -188,6 +182,28 @@ export class Registry {
     }
   }
 
+  private _handleUnregister(e: UnregisterEvent): void {
+    if (isUnregisterEvent(e)) {
+      handleUnregister(e, this._onUnregister);
+    }
+  }
+
+  private _onListenersAdded = (): void => {
+    this._listening = true;
+  };
+
+  private _onRegister = async (service: AppFrameElement): Promise<void> => {
+    this._services.push(service as AppFrameElement);
+  };
+
+  private _onUnregister = async (service: AppFrameElement): Promise<void> => {
+    if (this._services.includes(service)) {
+      this._services = this._services.splice(
+        this._services.indexOf(service),
+        1,
+      );
+    }
+  };
   private _setIsListening = (value: boolean): void => {
     this._listening = value;
   };

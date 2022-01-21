@@ -1,4 +1,0 @@
-export enum RenderingEvents {
-  RENDER = 'RENDER',
-  SET_RENDERER_LISTENING = 'SET_RENDERER_LISTENING',
-}

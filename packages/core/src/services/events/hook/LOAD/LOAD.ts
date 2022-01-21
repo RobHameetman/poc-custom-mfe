@@ -1,12 +1,17 @@
+import { AppFrameElement } from '../../../components';
 import { ServiceHookEvents } from '../../../enums';
-import { dispatchFrom } from '../../../../utils';
+import { AsyncDetail, dispatchFrom } from '../../../../utils';
 
-export type LoadEvent = CustomEvent<null>;
+export type LoadEvent = CustomEvent<AsyncDetail<LoadEventDetail>>;
 
-export const load = (service: string) => {
-  const dispatch = dispatchFrom(service);
+export interface LoadEventDetail {
+  readonly frame: AppFrameElement;
+}
 
-  dispatch(ServiceHookEvents.LOAD, null);
+export const load = async (frame: AppFrameElement): Promise<void> => {
+  const dispatch = dispatchFrom(frame.name);
+
+  return dispatch<LoadEventDetail>(ServiceHookEvents.LOAD, { frame });
 };
 
 export const isLoadEvent = (value: unknown): value is LoadEvent => {

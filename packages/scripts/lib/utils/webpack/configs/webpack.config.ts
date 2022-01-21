@@ -1,4 +1,5 @@
 import path from 'path';
+import { CompilerOptions } from 'typescript';
 import { Configuration, DevtoolModuleFilenameTemplateInfo } from 'webpack';
 import {
   PATHS_APP_BUILD_DIR,
@@ -6,8 +7,8 @@ import {
   PATHS_APP_NODE_MODULES,
   PATHS_APP_SRC_DIR,
   WebpackBuildMode,
-  getBuildEnv,
   env as getEnv,
+  getNodeEnv,
   isDevelopment,
   isProduction,
   isWebpackBuildMode,
@@ -28,9 +29,12 @@ import {
 const DEFAULT_DEVTOOL = 'source-map';
 
 export const createWebpackConfig = (
-  buildEnv = getBuildEnv(),
-  packageJson: PackageJson,
+  buildEnv = getNodeEnv(),
   publicUrl: string,
+  packageJson: PackageJson,
+  tsConfig?: CompilerOptions,
+  isServeCmd = false,
+  shellIsRunning = false,
 ): Configuration => {
   const isProd = isProduction(buildEnv);
   const isDev = isDevelopment(buildEnv);
@@ -65,7 +69,7 @@ export const createWebpackConfig = (
     mode,
     module: {
       rules: [
-        { parser: { requireEnsure: false } },
+        { parser: { requireEnsure: false, system: false } },
         eslintRule(),
         {
           oneOf: [staticImageFormatRule(imageInlineSizeLimit), tsRule(), cssRule(publicUrl)],
@@ -96,11 +100,17 @@ export const createWebpackConfig = (
     },
     output: {
       chunkFilename,
+      crossOriginLoading: 'anonymous',
       devtoolModuleFilenameTemplate,
       filename,
       futureEmitAssets: true,
       globalObject: 'this',
       jsonpFunction: `webpackJsonp${packageJson.name}`,
+      libraryTarget:
+        (tsConfig?.module as string | undefined) === 'system' &&
+        (isProd || (isDev && isServeCmd && shellIsRunning))
+          ? 'system'
+          : 'var',
       path: isProd ? PATHS_APP_BUILD_DIR : undefined,
       pathinfo: isDev,
       publicPath: publicUrl,

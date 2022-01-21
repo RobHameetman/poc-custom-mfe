@@ -1,0 +1,81 @@
+{
+  "name": "@microfrontend-example/app",
+  "version": "0.0.1",
+  "description": "The client-side entrypoint of the application",
+  "author": "Robert H. Hameetman <engineering@robhameetman.com>",
+  "homepage": "https://www.robhameetman.com/",
+  "license": "MIT",
+  "private": true,
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "@microfrontend-example app build",
+    "dev": "@microfrontend-example app dev",
+    "start": "@microfrontend-example app start",
+    "test": "@microfrontend-example app test"
+  },
+  "engines": {
+    "node": ">=8.10.0",
+    "npm": ">=6.4.1"
+  },
+  "dependencies": {
+    "@microfrontend-example/core": "^0.2.69",
+    "@microfrontend-example/scripts": "^1.1.76",
+    "systemjs": "^6.5.0"
+  },
+  "devDependencies": {
+    "@rob.hameetman/eslint-config": "0.0.11",
+    "@types/node": "^12.7.5",
+    "@types/systemjs": "^0.20.6",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3",
+    "webpack-dashboard": "^3.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "@rob.hameetman/eslint-config"
+    ],
+    "globals": {
+      "window": true,
+      "$events": true
+    },
+    "rules": {
+      "@typescript-eslint/no-empty-interface": "off",
+      "import/extensions": "off",
+      "sort-imports": "off"
+    }
+  },
+  "eslintIgnore": [
+    "dist"
+  ],
+  "prettier": {
+    "semi": true,
+    "trailingComma": "all",
+    "singleQuote": true,
+    "printWidth": 80,
+    "tabWidth": 2
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "testMatch": [
+      "**/__tests__/**/*.ts",
+      "**/?*.spec.ts"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    }
+  }
+}

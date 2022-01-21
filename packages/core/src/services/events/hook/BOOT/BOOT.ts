@@ -1,12 +1,17 @@
+import { AppFrameElement } from '../../../components';
 import { ServiceHookEvents } from '../../../enums';
-import { dispatchFrom } from '../../../../utils';
+import { AsyncDetail, dispatchFrom } from '../../../../utils';
 
-export type BootEvent = CustomEvent<null>;
+export type BootEvent = CustomEvent<AsyncDetail<BootEventDetail>>;
 
-export const boot = (service: string) => {
-  const dispatch = dispatchFrom(service);
+export interface BootEventDetail {
+  readonly frame: AppFrameElement;
+}
 
-  dispatch(ServiceHookEvents.BOOT, null);
+export const boot = async (frame: AppFrameElement): Promise<void> => {
+  const dispatch = dispatchFrom(frame.name);
+
+  return dispatch<BootEventDetail>(ServiceHookEvents.BOOT, { frame });
 };
 
 export const isBootEvent = (value: unknown): value is BootEvent => {
@@ -15,8 +20,6 @@ export const isBootEvent = (value: unknown): value is BootEvent => {
     value !== null &&
     'type' in value &&
     typeof (value as Partial<BootEvent>).type === 'string' &&
-    (value as Partial<BootEvent>).type!.includes(
-      ServiceHookEvents.BOOT,
-    )
+    (value as Partial<BootEvent>).type!.includes(ServiceHookEvents.BOOT)
   );
 };

@@ -1,18 +1,16 @@
 import {
-  AddServiceEventHandler,
+  RegisterEventHandler,
   RegistrationErrorEventHandler,
   RegistrationSuccessEventHandler,
-  RemoveServiceEventHandler,
+  UnregisterEventHandler,
   SetRegistryListeningEventHandler,
-  RegistrationEventHandler,
 } from '../RegistrationEventHandler';
 import { RegistrationEvents } from '../../enums';
 
 export interface RegistrationEventHandlers {
-  [RegistrationEvents.ADD_SERVICE]: AddServiceEventHandler;
-  [RegistrationEvents.REGISTRATION_ERROR]: RegistrationErrorEventHandler;
-  [RegistrationEvents.REGISTRATION_SUCCESS]: RegistrationSuccessEventHandler;
-  [RegistrationEvents.REMOVE_SERVICE]: RemoveServiceEventHandler;
-  [RegistrationEvents.SET_REGISTRY_LISTENING]: SetRegistryListeningEventHandler;
-  [key: string]: RegistrationEventHandler;
+  readonly [RegistrationEvents.REGISTER]?: RegisterEventHandler;
+  readonly [RegistrationEvents.REGISTRATION_ERROR]?: RegistrationErrorEventHandler;
+  readonly [RegistrationEvents.REGISTRATION_SUCCESS]?: RegistrationSuccessEventHandler;
+  readonly [RegistrationEvents.UNREGISTER]?: UnregisterEventHandler;
+  readonly [RegistrationEvents.SET_REGISTRY_LISTENING]?: SetRegistryListeningEventHandler;
 }

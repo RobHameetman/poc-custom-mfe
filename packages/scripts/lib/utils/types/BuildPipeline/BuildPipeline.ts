@@ -1,7 +1,9 @@
+import { CompilerOptions } from 'typescript';
 import { Configuration } from 'webpack';
 import { DevServer } from '../DevServer';
-import { Compiler, WebpackCompiler } from '../Compiler';
-import { BuildEnv, BuildEnvs, Bundler } from '../../enums';
+import { Compiler } from '../Compiler';
+import { WebpackCompiler } from '../WebpackCompiler';
+import { Bundler, NodeEnv, NodeEnvs } from '../../enums';
 import { createWebpackConfig } from '../../webpack';
 import { PackageJson } from '../PackageJson/PackageJson';
 
@@ -10,7 +12,7 @@ export type CompilerConfig = Record<string, unknown> | Configuration;
 export class BuildPipeline {
   readonly bundler: Bundler;
 
-  mode: BuildEnv = BuildEnvs.development;
+  mode: NodeEnv = NodeEnvs.development;
 
   private _config: CompilerConfig;
 
@@ -20,9 +22,12 @@ export class BuildPipeline {
 
   constructor(
     bundler: Bundler = Bundler.Webpack,
-    mode: BuildEnv = BuildEnvs.development,
+    mode: NodeEnv = NodeEnvs.development,
     publicUrl: string,
     packageJson: PackageJson,
+    tsConfig?: CompilerOptions,
+    isServeCmd = false,
+    shellIsRunning = false,
   ) {
     this.bundler = bundler;
 
@@ -30,7 +35,7 @@ export class BuildPipeline {
       this.mode = mode;
     }
 
-    this._config = createWebpackConfig(this.mode, packageJson, publicUrl);
+    this._config = createWebpackConfig(this.mode, publicUrl, packageJson, tsConfig);
 
     switch (this.bundler) {
       default:
@@ -39,7 +44,7 @@ export class BuildPipeline {
     }
   }
 
-  async build(mode?: BuildEnv): Promise<void> {
+  async build(mode?: NodeEnv): Promise<void> {
     try {
       if (mode) {
         this.mode = mode;
@@ -53,14 +58,14 @@ export class BuildPipeline {
     }
   }
 
-  async serve(mode: BuildEnv): Promise<void> {
+  async serve(mode: NodeEnv): Promise<void> {
     if (mode) {
       this.mode = mode;
     }
 
     if (this._compiler) {
       this._devServer = new DevServer(this._compiler);
-      this._devServer.start();
+      await this._devServer.start();
     }
   }
 }

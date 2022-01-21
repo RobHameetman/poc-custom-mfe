@@ -1,23 +1,22 @@
 import { $$InitEvent } from './$$INIT';
 import { defineCustomElements } from '../DEFINE_CUSTOM_ELEMENTS';
-import { AppEntrypointElement } from '../../components';
+import { AppContainerElement } from '../../components';
 import { AppRouterElement, AppRouteElement } from '../../../routing';
-import { logEvent } from '../../../utils';
+import { AppFrameElement } from '../../../services';
 
 export const handle$$Init = (e: $$InitEvent) => {
-  if (!AppEntrypointElement.$$initConfirmed) {
-    logEvent(e);
-
+  if (!AppContainerElement.$$initConfirmed) {
     if (e.detail) {
       const { resolve } = e.detail;
 
       defineCustomElements([
-        { $element: AppEntrypointElement, tag: 'app-entrypoint' },
+        { $element: AppContainerElement, tag: 'app-container' },
         { $element: AppRouterElement, tag: 'app-router' },
         { $element: AppRouteElement, tag: 'app-route' },
+        { $element: AppFrameElement, tag: 'app-frame' },
       ]);
 
-      AppEntrypointElement.confirm$$Init();
+      AppContainerElement.confirm$$Init();
 
       resolve();
     }

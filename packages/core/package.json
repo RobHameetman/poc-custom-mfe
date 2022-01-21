@@ -1,6 +1,6 @@
 {
   "name": "@microfrontend-example/core",
-  "version": "0.1.110",
+  "version": "0.2.69",
   "description": "An event-driven orchestration layer",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",

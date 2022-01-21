@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/6.5.0/system.min.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <app-container>
+      <app-router>
+        <app-route exact path="/">
+          <app-frame name="home" src="http://localhost:3001" />
+        </app-route>
+        <app-route path="/login">
+          <app-frame name="login" src="http://localhost:3002" />
+        </app-route>
+        <app-route path="/manager/:managerId">
+          <app-frame name="manager" src="http://localhost:3003" />
+        </app-route>
+      </app-router>
+    </app-container>
+  </body>
+</html>
