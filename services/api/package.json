@@ -6,16 +6,14 @@
   "homepage": "https://www.robhameetman.com/",
   "license": "MIT",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RobHameetman/packages.git"
-  },
-  "bugs": {
-    "url": "https://github.com/RobHameetman/packages/issues"
-  },
   "main": "dist/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobHameetman/poc-custom-mfe.git",
+    "directory": "services/api/"
+  },
   "scripts": {
     "build": "@microfrontend-example service build",
     "dev": "@microfrontend-example service dev",

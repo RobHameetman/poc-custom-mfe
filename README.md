@@ -1,47 +1,88 @@
-# @microfrontend-example
+# Micro-Frontend Orchestration with WebComponents
 
-## Getting Started
+The modern web landscape is evolving at a rapid pace, and with it comes the need
+for scalable and modular solutions. This project from 2020 presents a Proof of
+Concept for a custom micro-frontend orchestration layer implemented using
+WebComponents. It showcases a blend of technical creativity, forward-thinking,
+and an unrelenting passion for pushing the boundaries of what's possible on the
+Front End. Some key features of the project are:
 
-### Prerequisites
+- **Dynamic Routing**: Seamlessly navigate between micro-frontends with the
+  `<app-router>` and `<app-route>` components.
+- **Component Registration**: Leverage an event-driven architecture for
+  predictable component registration and lifecycle management.
+- **Custom JSX Pipeline**: Write services in TSX with a tailored rendering
+  process for a more intuitive development experience.
+- **Build Process Abstraction**: Ensure consistency across services with a
+  centralized shared build pipeline.
+- **Service Lifecycle Management**: Efficiently handle each phase of a service's
+  lifecycle, from boot to unload.
+- **Service Endpoint Discovery**: Dynamically identify and manage service
+  endpoints.
 
-- Node v8.10.0+
-- NPM v6.4.1+
+> Please note that this project is an endeavor of curiosity. If you're looking
+> for the best way to go about building a micro-frontend, you should use Module
+> Federation.
 
-## Entities
+## Architecture Overview
 
-### Registry
+<!--
+Diagrams to Include:
+- System Flowchart: A top-level visual representation of the system flow, from
+  route activation to service mounting and unmounting.
+- Event Flow Diagram: A detailed representation showcasing the event-driven
+  architecture, highlighting event sources, handlers, and their interplay.
+- Package Interaction Diagram: A visual layout of how the different NPM packages
+  interact with each other.
+-->
 
-Manages an aggregation of `Service`s.
+### Package Ecosystem
 
-### Orchestrator
+- `@microfrontend-example/core`: An advanced event-driven orchestration layer
+  used in the shell.
 
-Determines whether or not the orchestration process should run.
+- `@microfrontend-example/create-component`: An initializer package that
+  provides scaffolding for new UI components.
 
-### Router
+- `@microfrontend-example/create-package`: An initializer package that provides
+  scaffolding for new packages in the `@microfrontend-example/` scope.
 
-Handles navigation and routing.
+- `@microfrontend-example/create-service`: An initializer package that provides
+  scaffolding for new microfrontend services.
 
-### Service
+- `@microfrontend-example/jsx`: A lightweight VDOM that allows UI components to
+  be implemented in JSX.
 
-Represents each service in the system. Handles loading, mounting, and unmounting
-of services.
+- `@microfrontend-example/scripts`: A powerful shared build pipeline for
+  centralized build configs and processes.
 
-## Statuses
+### Orchestration Phases
 
-| **Status**        |     |
-| ----------------- | --: |
-| `REGISTERED`      |     |
-| `LOADED`          |     |
-| `LOAD_ERROR`      |     |
-| `BOOTSTRAPPED`    |     |
-| `BOOTSTRAP_ERROR` |     |
-| `MOUNTED`         |     |
-| `MOUNT_ERROR`     |     |
-| `RUNNING`         |     |
-| `STOPPED`         |     |
-| `UNMOUNTED`       |     |
-| `UNMOUNT_ERROR`   |     |
-| `SKIPPED`         |     |
+In the `@microfrontend-example/core` package, orchestration occurs during phases
+for **registration**, **orchestration**, **routing**, and **service management**.
+
+### Service Lifecycle
+
+Each service goes through a lifecycle which repeats as the user navigates the
+application. These lifecycle phases are **boot**, **load**, **mount**,
+**unmount**, and **unload**. A service is booted, loaded, and mounted when the
+user navigates to the route for that service, and is unmounted and unloaded when
+the user navigates to the route for another service.
+
+## Definitions
+
+- *registry*: Manages an aggregation of `Service`s.
+
+- *orchestrator*: Determines whether or not the orchestration process should run.
+
+- *router*: Handles navigation and both static and dynamic routing.
+
+- *service*: Represents each micro-frontend service in the system. Handles
+  loading, mounting, and unmounting of services.
+
+- *shell*: The shell serves `index.html` to the client and provides the entire
+  orchestration layer responsible for registering, loading, mounting,
+  unmounting, and unloading micro-frontend services.
 
 ## Events
 
@@ -57,55 +98,3 @@ of services.
 | `<service>:BEFORE_CHANGE` |     |
 | `<service>:NO_APP_CHANGE` |     |
 | `<service>:ROUTING_EVENT` |     |
-
-## Process
-
-Fire Event => Update Status => Call Hooks
-
-start() => reroute()
-
-### Registration
-
-The shell calls `registerApplication()` and passes in a name, a load hook, a route
-activation function, and an optional set of custom props for each service.
-
-`registerApplication()` fires an `APP_REGISTER` event. Since the s
-
-### Orchestration
-
-## Structure
-
-## Apps
-
-<!--
-  Note: I could call `services` "apps" and probably would if I weren't building
-  something basically like Microsoft's office.com, a distributed solution for
-  enterprise-level suites of apps, so "apps" has an additional user context in
-  this case.
- -->
-
-Domain-focused solutions for performing complex integrated business logic.
-
-- `admin`: A portal for managing users, groups, and roles
-- `billing`: A portal for managing users, groups, and roles
-- `portal`: The primary 'hub' for accessing apps
-
-### Packages
-
-Cross-domain integrations and shared functionality go here.
-
-- `core`: An advanced event-driven orchestration layer
-- `scripts`: A powerful shared build pipeline for centralized automation and other cool shib
-
-### Services
-
-Smaller services with more fragmented logic and little-to-no UI should go
-here.
-
-- `auth`: A portal for managing users, groups, and roles
-- `data`: A GraphQL Apollo server for data aggregation logic
-
-### Shell/Frame
-
-The shell is the orchestration layer served as `index.html` responsible for
-registering, loading, mounting, unmounting, and unloading services.

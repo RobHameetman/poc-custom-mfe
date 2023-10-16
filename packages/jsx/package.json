@@ -5,16 +5,14 @@
   "author": "Robert H. Hameetman <robert.hameetman@omniframe.org>",
   "homepage": "https://www.onmiframe.org",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/omniframe/omniframe.git"
-  },
-  "bugs": {
-    "url": "https://github.com/omniframe/omniframe/issues"
-  },
   "main": "./dist/prod/core.esm.js",
   "module": "./dist/dev/core.umd.js",
   "typings": "./dist/declarations/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobHameetman/poc-custom-mfe.git",
+    "directory": "packages/jsx/"
+  },
   "scripts": {
     "build": "concurrently npm:build:dev npm:build:prod",
     "build:dev": "NODE_ENV=development npm run rollup",

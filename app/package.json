@@ -1,12 +1,17 @@
 {
   "name": "@microfrontend-example/app",
   "version": "0.0.1",
-  "description": "The client-side entrypoint of the application",
+  "description": "The entrypoint of the application which serves index.html and orchestrates micro-frontend services.",
   "author": "Robert H. Hameetman <engineering@robhameetman.com>",
   "homepage": "https://www.robhameetman.com/",
   "license": "MIT",
   "private": true,
   "main": "./dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RobHameetman/poc-custom-mfe.git",
+    "directory": "app/"
+  },
   "scripts": {
     "build": "@microfrontend-example app build",
     "dev": "@microfrontend-example app dev",

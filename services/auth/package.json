@@ -6,14 +6,12 @@
   "homepage": "https://www.robhameetman.com/",
   "license": "MIT",
   "private": true,
+  "main": "dist/main.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobHameetman/packages.git"
+    "url": "git+https://github.com/RobHameetman/poc-custom-mfe.git",
+    "directory": "services/auth/"
   },
-  "bugs": {
-    "url": "https://github.com/RobHameetman/packages/issues"
-  },
-  "main": "index.js",
   "scripts": {
     "build": "@microfrontend-example service build",
     "dev": "@microfrontend-example service dev",
